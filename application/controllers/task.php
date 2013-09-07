@@ -12,26 +12,22 @@ class Task extends CI_Controller {
 			//get session data
 			$session_data = $this->session->userdata('logged_in');
 			
-			
-                        
-                        
+			//to do - do chekings on $this->uri->segment(2)
+		
 			//get messages
 			$data['messages'] = $this->tasks->taskMessages($this->uri->segment(2), $this->session->userdata('user_id'));
-                        $data['user_id'] = $this->session->userdata('user_id');
-                        
-                        
-                        if ($this->tasks->checkUserPrivilege($session_data['user_id'], $this->uri->segment(2))) {
-                            $this->template->load('template', 'task_view', $data);
-                            
-                        }
-                        else {
-                            redirect('home', 'refresh');
-                            
-                        }
-                        
-
-            
-            
+			$data['user_id'] = $this->session->userdata('user_id');
+			
+			
+			if ($this->tasks->checkUserPrivilege($session_data['user_id'], $this->uri->segment(2))) {
+				//user is allowed to see this task
+				$this->template->load('template', 'task_view', $data);
+				
+			}
+			else {
+				//user is NOT allowed to see this task
+				redirect('home', 'refresh');
+			}
 		}
 		else {
 			//not logged in
