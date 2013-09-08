@@ -15,12 +15,19 @@ class Task extends CI_Controller {
 			//to do - do chekings on $this->uri->segment(2)
 		
 			//get messages
-			$data['messages'] = $this->tasks->taskMessages($this->uri->segment(2), $this->session->userdata('user_id'));
 			$data['user_id'] = $this->session->userdata('user_id');
 			
-			
+			//check if user is allowed to see this task
 			if ($this->tasks->checkUserPrivilege($session_data['user_id'], $this->uri->segment(2))) {
 				//user is allowed to see this task
+				
+				//get messages
+				$data['messages'] = $this->tasks->taskMessages($this->uri->segment(2), $this->session->userdata('user_id'));
+				
+				//get working hours
+				$data['working_hours'] = $this->tasks->taskWorkingHours($this->uri->segment(2));
+					
+				//die($data['messages'][0]->name);		
 				$this->template->load('template', 'task_view', $data);
 				
 			}
