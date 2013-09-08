@@ -1,0 +1,10 @@
+@font-face {
+    font-family: 'BlanchCaps';
+    src: url('../media/fonts/blanch_caps-webfont.eot');
+    src: url('../media/fonts/blanch_caps-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../media/fonts/blanch_caps-webfont.woff') format('woff'),
+         url('../media/fonts/blanch_caps-webfont.ttf') format('truetype'),
+         url('../media/fonts/blanch_caps-webfont.svg#BlanchCaps') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
