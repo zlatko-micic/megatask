@@ -1,5 +1,5 @@
 id = <?php echo $this->uri->segment(2) ?><br>
-userid = <?php echo $user_id ?>
+user id = <?php echo $session_data['user_id'] ?><br>
 
 <?php
 echo '<pre>';

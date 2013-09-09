@@ -20,16 +20,11 @@
 		<?php
 		
 		if ($this->session->userdata('logged_in')) {
-			echo "<div class=\"logout\"><a href=\"".site_url('/home/logout')."\">Logout ".$this->session->userdata('logged_in')['name']."</a></div>";
+			echo "<div class=\"logout\"><a href=\"".site_url('/home/logout')."\">Logout ".$session_data['name']."</a></div>";
 		}
 		?>
     </div>
-	
-	<?php
-	//echo "<pre>";
-	//print_r($this->session);
-	//echo "</pre>";
-	?>
+
 	
 	
     

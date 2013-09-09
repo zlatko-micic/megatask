@@ -53,6 +53,107 @@ body {
 	background:#f3f3f3;
 }
 
+.infoerrornote , .infonote, .infooknote {
+	margin: 0px 0px 5px 0;
+	line-height: normal;
+	padding: 10px 10px 10px 40px;
+	-moz-border-radius: 4px;
+	-khtml-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	box-shadow: 0 1px 0 0 #fff inset, 0 -1px 2px #fff inset;
+	position:relative;
+	font-size:12px;
+	width:460px;
+	font-family:'BlanchCaps' !important;
+}
+
+.infooknote {
+	border: #9ed19e 1px solid;
+	background:#c3fac3;
+	
+	background-image: linear-gradient(bottom, #a4d3a4 30%, #c3fac3 100%);
+	background-image: -o-linear-gradient(bottom, #a4d3a4 30%, #c3fac3 100%);
+	background-image: -moz-linear-gradient(bottom, #a4d3a4 30%, #c3fac3 100%);
+	background-image: -webkit-linear-gradient(bottom, #a4d3a4 30%, #c3fac3 100%);
+	background-image: -ms-linear-gradient(bottom, #a4d3a4 30%, #c3fac3 100%);
+	
+	background-image: -webkit-gradient(
+	linear,
+	left bottom,
+	left top,
+	color-stop(0.3, #a4d3a4),
+	color-stop(1, #c3fac3)
+	);
+	text-shadow: 0px 1px 0px #666;
+	color:#fff;
+
+}
+
+.infonote {
+	border: #d1d09e 1px solid;
+	background:#faf9c3;
+	
+	background-image: linear-gradient(bottom, #dedd9e 30%, #faf9c3 100%);
+	background-image: -o-linear-gradient(bottom, #dedd9e 30%, #faf9c3 100%);
+	background-image: -moz-linear-gradient(bottom, #dedd9e 30%, #faf9c3 100%);
+	background-image: -webkit-linear-gradient(bottom, #dedd9e 30%, #faf9c3 100%);
+	background-image: -ms-linear-gradient(bottom, #dedd9e 30%, #faf9c3 100%);
+	
+	background-image: -webkit-gradient(
+	linear,
+	left bottom,
+	left top,
+	color-stop(0.3, #dedd9e),
+	color-stop(1, #faf9c3)
+	);
+	
+	text-shadow: 0px 1px 0px #fff;
+	color:#666;
+}
+.infoerrornote  {
+	border: #870b0b 1px solid;
+	background:#fac3c3;
+	
+	background-image: linear-gradient(bottom, #e29999 30%, #fac3c3 100%);
+	background-image: -o-linear-gradient(bottom, #e29999 30%, #fac3c3 100%);
+	background-image: -moz-linear-gradient(bottom, #e29999 30%, #fac3c3 100%);
+	background-image: -webkit-linear-gradient(bottom, #e29999 30%, #fac3c3 100%);
+	background-image: -ms-linear-gradient(bottom, #e29999 30%, #fac3c3 100%);
+	
+	background-image: -webkit-gradient(
+	linear,
+	left bottom,
+	left top,
+	color-stop(0.3, #e29999),
+	color-stop(1, #fac3c3)
+	);
+	
+	text-shadow: 0px 1px 0px #870b0b;
+	color:#fff;
+}
+
+.infooknote em, .infoerrornote em, .infonote em {
+	display:block;
+	width:16px;
+	height:16px;
+	position:absolute;
+	top:10px;
+	left:12px;
+}
+
+.infooknote em {
+	background: transparent url("../images/ok.png") -160px -16px;
+}
+
+.infonote em {
+	background: transparent url("../images/warning.png") -176px -16px;
+}
+
+.infoerrornote em {
+	background: transparent url("../images/error.png") -192px -16px;
+}
+
 #header {
 	position:relative;
 	height:40px;

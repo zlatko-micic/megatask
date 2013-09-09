@@ -1,7 +1,11 @@
 
    <h1>Login</h1>
    
-   <?php echo validation_errors(); ?>
+   <?php
+   if (validation_errors()) {
+	   echo '<div class="infoerrornote"><em></em>'. validation_errors() .'</div>';
+   }
+   ?>
    <?php echo form_open('login'); ?>
    
     <label for="email">E-mail address:</label><br/>
@@ -30,5 +34,3 @@
     
      <input type="submit" value="Login"/>
    </form>
-
-

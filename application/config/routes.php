@@ -43,6 +43,7 @@ $route['404_override'] = '';
 //$route['(.*)'] = "welcome/$1";
 $route['default_controller'] = "home";
 $route['task/:num'] = "task";
+$route['project/:num'] = "project";
 
 
 /* End of file routes.php */

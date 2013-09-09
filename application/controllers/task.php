@@ -9,16 +9,14 @@ class Task extends CI_Controller {
 	
 	function index() {
 		if ($this->session->userdata('logged_in')) {
+			
 			//get session data
-			$session_data = $this->session->userdata('logged_in');
+			$data['session_data'] = $this->session->userdata('logged_in');
 			
 			//to do - do chekings on $this->uri->segment(2)
-		
-			//get messages
-			$data['user_id'] = $this->session->userdata('user_id');
 			
 			//check if user is allowed to see this task
-			if ($this->tasks->checkUserPrivilege($session_data['user_id'], $this->uri->segment(2))) {
+			if ($this->tasks->checkUserPrivilege($data['session_data']['user_id'], $this->uri->segment(2))) {
 				//user is allowed to see this task
 				
 				//get messages
