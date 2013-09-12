@@ -43,5 +43,21 @@ Class User extends CI_Model {
 		
 		return ($this->db->affected_rows() != 1) ? false : true;
 	}
+	
+	function projectInvite($user_id, $project_id) {
+		$this->db-> set('user_id', $user_id);
+		$this->db-> set('project_id', $project_id);
+		$this->db-> insert('project_users');
+		
+		return ($this->db->affected_rows() != 1) ? false : true;
+	}
+	
+	function sendInvite($email, $project_id) {
+		$this->db-> set('email', $email);
+		$this->db-> set('project_id', $project_id);
+		$this->db-> insert('invitations');
+		
+		return ($this->db->affected_rows() != 1) ? false : true;
+	}
  
 }

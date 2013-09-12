@@ -12,7 +12,6 @@
     <?php
     echo form_input(array(
         'name' => 'username',
-        'value' => $post_string['s_username'],
         'placeholder' => 'E-mail',
         'onclick' => 'if(this.value == \'E-mail\') this.value = \'\'', //IE6 IE7 IE8
         'onblur' => 'if(this.value == \'\') this.value = \'E-mail\''       //IE6 IE7 IE8

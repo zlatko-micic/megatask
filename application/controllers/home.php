@@ -16,7 +16,7 @@ class Home extends CI_Controller {
 			//get session data
 			$data['session_data'] = $this->session->userdata('logged_in');
 			
-			//vlidate form (new project create)
+			//validate form (new project create)
 			$this->form_validation->set_rules('title', 'Project title', 'trim|required|xss_clean');
 			
 			if ($this->form_validation->run() == FALSE) {
