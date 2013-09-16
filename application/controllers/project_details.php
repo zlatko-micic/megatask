@@ -24,8 +24,10 @@ class Project_details extends CI_Controller {
 				//sum all time in seconds
 				$data['sum_seconds'] = 0;
 				
-				foreach ($data['project_details'] as $row) {
-					$data['sum_seconds'] += $row->seconds;
+				if ($data['project_details']) {
+					foreach ($data['project_details'] as $row) {
+						$data['sum_seconds'] += $row->seconds;
+					}	
 				}
 				
 				/*
@@ -37,16 +39,20 @@ class Project_details extends CI_Controller {
 				$a_highchart = array ();
 				
 				//create array with dates
-				foreach ($data['project_details'] as $row) 
-					if (!in_array($row->date,$a_dates) && $row->finished != '0000-00-00 00:00:00') array_push($a_dates,$row->date);
+				if ($data['project_details']) {
+					foreach ($data['project_details'] as $row) 
+						if (!in_array($row->date,$a_dates) && $row->finished != '0000-00-00 00:00:00') array_push($a_dates,$row->date);
+				}
 				
 				//create array with user IDs
-				foreach ($data['project_details'] as $row)
-					if (!$this->in_multiarray($row->user_id,$a_users,'id') && $row->finished != '0000-00-00 00:00:00') 
-							array_push($a_users,array(
-													'id' =>$row->user_id,
-													'name' =>$row->name
-													));
+				if ($data['project_details']) {
+					foreach ($data['project_details'] as $row)
+						if (!$this->in_multiarray($row->user_id,$a_users,'id') && $row->finished != '0000-00-00 00:00:00') 
+								array_push($a_users,array(
+														'id' =>$row->user_id,
+														'name' =>$row->name
+														));
+				}
 				
 				//create array for highchart
 				foreach ($a_users as $key => $row) {

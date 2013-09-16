@@ -138,7 +138,7 @@ $(function () {
 			echo $html;
 			?>
 			],
-                center: [100, 80],
+                center: [50, 50],
                 size: 100,
                 showInLegend: false,
                 dataLabels: {
@@ -160,8 +160,10 @@ project id = <?php echo $this->uri->segment(2) ?><br>
 
 <?php
 $html = '';
-foreach ($project_details as $row) {
-	$html .= $row->name . ' - '. $row->time_done . '<br>';
+if ($project_details) {
+	foreach ($project_details as $row) {
+		$html .= $row->name . ' - '. $row->time_done . '<br>';
+	}	
 }
 echo $html;
 

@@ -28,27 +28,30 @@ Class Tasks extends CI_Model {
 	function getTaskInfo($id) {
 		//get main infos about task
 		
-		$this->db->select('tasks.id,
-			tasks.name,
+		$this->db->select('tasks.id as task_id,
+			tasks.title,
 			tasks.description,
 			tasks.date_created,
-			tasks.done,
+			tasks.active,
 			tasks.priority,
-			tasks.due,
 			tasks.due_date,
-			tasks.date_done,
-			users.name as owner_name,
-			users.surname as last_name,
+			tasks.date_finished,
+			users.name as admin_name,
+			users.surname as admin_lastname,
 			u_d.name as done_name,
-			u_d.last_name as done_last_name,
+			u_d.surname as done_last_name,
+			projects.id as project_id,
+			projects.title as project,
 			GROUP_CONCAT(DISTINCT(u.name)) as names,
-			GROUP_CONCAT(DISTINCT(u.surname)) as last_names,
-			GROUP_CONCAT(DISTINCT(u.avatar)) as avatars,
-			GROUP_CONCAT(DISTINCT(a.name)) as attachments,
-			GROUP_CONCAT(DISTINCT(a.original_name)) as attachments_names');
+			GROUP_CONCAT(DISTINCT(u.surname)) as last_names');
 		$this->db->from('tasks');
-		$this->db->join('users u', 'find_in_set(u.id, tasks.users)', 'left');
-		$this->db->where('working_hours.task_id', $id);
+		$this->db->join('users', 'users.id = tasks.user_id', 'left');
+		$this->db->join('users u_d', 'u_d.id = tasks.finished_by', 'left');
+		$this->db->join('task_users', 'task_users.task_id = tasks.id ', 'left');
+		$this->db->join('projects', 'projects.id = tasks.project_id', 'left');
+		$this->db->join('users u', 'u.id = task_users.user_id', 'left');
+		
+		$this->db->where('tasks.id', $id);
 		
 		$query = $this->db->get();
 		
@@ -60,7 +63,7 @@ Class Tasks extends CI_Model {
 		}
 	}
     
-	function taskMessages($id, $user_id) {
+	function taskMessages($id) {
 		//get messages and their authors
 		$this->db->select('messages.text, messages.date, users.id, users.name, users.surname');
 		$this->db->from('messages');
@@ -101,4 +104,25 @@ Class Tasks extends CI_Model {
 			return false;
 		}
 	}
+	
+	function setMessage($message,$user_id,$task_id) {
+		//set users message
+		$this->db->set('text', $message);
+		$this->db->set('user_id', $user_id);
+		$this->db->set('task_id', $task_id);
+		$this->db->insert('messages');
+		
+		return ($this->db->affected_rows() != 1) ? false : true;
+	}
+	
+	function setMessageFile($name,$server_name,$message_id) {
+		//set users message
+		$this->db->set('original_file_name', $name);
+		$this->db->set('server_file_name', $server_name);
+		$this->db->set('message_id', $message_id);
+		$this->db->insert('files');
+		
+		return ($this->db->affected_rows() != 1) ? false : true;
+	}
+	
 }

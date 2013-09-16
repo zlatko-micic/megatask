@@ -37,18 +37,26 @@
 		
 		<?php
 		//right menu
+		$html = '';
+		$html .= '<ul class="rightmenu">' . "\n";
 		if ($this->session->userdata('logged_in')) {
-			$html = '';
-			$html .= '<ul class="rightmenu">' . "\n";
 			$html .= '<li>' . "\n";
-			$html .= "<a href=\"".site_url('/settings')."\"><img class=\"tiptip\" title=\"Settings\" src=\"".site_url('/images/icons/32x32/hire-me.png')."\"></a>" . "\n";
+			$html .= "<a href=\"".site_url('/settings')."\"><img class=\"tiptip\" title=\"Settings\" src=\"".site_url('/images/icons/32x32/my-account.png')."\"></a>" . "\n";
 			$html .= '</li>' . "\n";
 			$html .= '<li>' . "\n";
-			$html .= "<a href=\"".site_url('/home/logout')."\"><img class=\"tiptip\" title=\"Logout ".$session_data['name']."\" src=\"".site_url('/images/icons/32x32/logout.png')."\"></a>" . "\n";
+			$html .= "<a href=\"".site_url('/home/logout')."\"><img class=\"tiptip\" title=\"Logout ".$session_data['name']."\" src=\"".site_url('/images/icons/32x32/sign-out.png')."\"></a>" . "\n";
 			$html .= '</li>' . "\n";
-			$html .= '</ul>' . "\n";
-			echo $html;
 		}
+		else {
+			$html .= '<li>' . "\n";
+			$html .= "<a href=\"".site_url('/login')."\"><img class=\"tiptip\" title=\"Login\" src=\"".site_url('/images/icons/32x32/login.png')."\"></a>" . "\n";
+			$html .= '</li>' . "\n";
+			$html .= '<li>' . "\n";
+			$html .= "<a href=\"".site_url('/registration')."\"><img class=\"tiptip\" title=\"Registration\" src=\"".site_url('/images/icons/32x32/customers.png')."\"></a>" . "\n";
+			$html .= '</li>' . "\n";
+		}
+		$html .= '</ul>' . "\n";
+		echo $html;
 		?>
     </div>
 

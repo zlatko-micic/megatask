@@ -48,30 +48,41 @@ class Project extends CI_Controller {
 						}
 					}
 					else {
-						//email is not registered. send an email
-						echo ' email for ' . $this->input->post('email');
-						$config = Array(
-							'protocol' => 'smtp',
-							'smtp_host' => 'ssl://smtp.googlemail.com',
-							'smtp_port' => 465,
-							'smtp_user' => 'xxx',
-							'smtp_pass' => 'xxx',
-							'mailtype'  => 'html', 
-							'charset'   => 'iso-8859-1'
-						);
-						$this->load->library('email', $config);
-						$this->email->set_newline("\r\n");
-						
-						$this->email->from('zlatkomicic@gmail.com', 'Zlatko Micic');
-						$this->email->to($this->input->post('email'));
-						$this->email->subject('Project invitation');
-						$this->email->message('Text with link and invitation to create an account');
-						
-						if ($this->email->send()) {
-							echo 'Your email.';
+						//email is not registered.
+						$invitation_result = $this->user->sendInvite($this->input->post('email'),$this->input->post('project'));
+						if ($invitation_result) {
+							//inserted into db. send an email
+							
+							$this->load->library('email');
+							
+							$config = Array(
+								'protocol' => 'smtp',
+								'smtp_host' => 'ssl://smtp.googlemail.com',
+								'smtp_port' => 465,
+								'smtp_user' => 'emailaddress',
+								'smtp_pass' => 'password',
+								'mailtype'  => 'html', 
+								'charset'   => 'iso-8859-1'
+							);
+							//$this->load->library('email', $config);
+							//$this->email->set_newline("\r\n");
+
+							$this->email->from('zlatkomicic@gmail.com', 'Zlatko Micic');
+							$this->email->to($this->input->post('email'));
+							$this->email->subject('Project invitation');
+							$this->email->message('Text with link and invitation to create an account');
+							//$this->email->message( $this->load->view( 'emailmessage', $data, true ) );
+
+							if ($this->email->send()) {
+								echo 'all ok.';
+							}
+							else {
+								show_error($this->email->print_debugger());
+								echo 'User in db and error sending an email';
+							}
 						}
 						else {
-							show_error($this->email->print_debugger());
+							echo 'problem writing into db';
 						}
 					}
 				}

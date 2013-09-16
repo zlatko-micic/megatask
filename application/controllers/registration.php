@@ -6,7 +6,7 @@ class Registration extends CI_Controller {
 
 	function __construct() {
 		parent::__construct();
-		$this->load->helper(array('form', 'url', 'captcha'));
+		$this->load->helper('captcha');
 		$this->load->library('form_validation');
 		$this->load->model('user','',TRUE);
 	}
@@ -36,16 +36,33 @@ class Registration extends CI_Controller {
 				//successful form submition
                             
 			   $password = hash('sha256', $this->input->post('password')); 
-			   $result = $this->user->register($_POST['email'], $password, $_POST['name'], $_POST['surname']);
+			   $result = $this->user->register($this->input->post('email'), 
+												$password, 
+												$this->input->post('name'), 
+												$this->input->post('surname'));
 						
 				if ($result) {
 					//data inserted into db
+					$user_id = $this->db->insert_id();
 					
 					//unset captcha
 					$this->session->unset_userdata('captchaWord');
 					
+					//check if there are any invitations for this email
+					$invitations_result = $this->user->getEmailInvitations($this->input->post('email'));
+					
+					if ($invitations_result) {
+						foreach ($invitations_result as $invitation) {
+							$this->user->projectInvite($user_id,$invitation->project_id, $invitation->date_sent, date("Y-m-d H:i:s"));
+						}
+						
+						//delete all invitations
+						$this->user->deleteEmailInvitations($this->input->post('email'));
+					}
+					
+					
 					//load template
-					$this->template->load('template', 'login_view');
+					//$this->template->load('template', 'login_view');
 				}	
 			}
 			else {
@@ -89,7 +106,7 @@ class Registration extends CI_Controller {
 	}
 
 	function check_captcha($value) {
-		if ($value != $this->session->userdata('captcha_word')) {
+		if (strtolower($value) != strtolower($this->session->userdata('captcha_word'))) {
 			// Captcha is wrong
 			$this->form_validation->set_message('check_captcha', 'The %s was wrong, please try again');
 			return FALSE;

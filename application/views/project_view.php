@@ -1,6 +1,12 @@
 project id = <?php echo $this->uri->segment(2) ?><br>
 creator id = <?php echo $project_details[0]->owner_id ?><br>
-my id = <?php echo $session_data['user_id'] ?><br>
+my id = <?php echo $session_data['user_id'] ?><br><br>
+
+
+<a href="<?php echo site_url('project-details/'. $this->uri->segment(2) ) ?>"><img src="<?php echo base_url('images/icons/32x32/current-work.png'); ?>" /></a>
+<br>
+<br>
+
 <?php
 //admins form for inviting users into this project
 if ($session_data['user_id'] == $project_details[0]->owner_id ) {
@@ -9,7 +15,9 @@ if ($session_data['user_id'] == $project_details[0]->owner_id ) {
 	
 	$html = '';
 	$html .= '<div class="inviteUsers">'. "\n";
-	$html .= validation_errors() . "\n";
+	if (validation_errors()) {
+		$html .= '<div class="infoerrornote"><em></em>'. validation_errors() .'</div>';
+	}
 	$html .= form_open(uri_string(), $input_attributes) . "\n";
 	$html .= '<label for="title">Invite people in project</label><br/>'. "\n";
 	$html .= form_input(array(

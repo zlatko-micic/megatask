@@ -47,12 +47,17 @@ abbr, acronym
     font-family: 'Open Sans Condensed', Arial;
 }
 
+h1 {
+	font-weight: normal;
+	font-size: 24px;
+	text-shadow: 1px 1px 0px #fff;
+}
 body {
 	background:#f3f3f3;
 }
 
 .infoerrornote , .infonote, .infooknote {
-	margin: 0px 0px 5px 0;
+	margin: 0;
 	line-height: normal;
 	padding: 10px 10px 10px 40px;
 	-moz-border-radius: 4px;
@@ -61,12 +66,13 @@ body {
 	border-radius: 4px;
 	box-shadow: 0 1px 0 0 #fff inset, 0 -1px 2px #fff inset;
 	position:relative;
-	font-size:12px;
+	font-size:14px;
 	font-family:'BlanchCaps' !important;
 	width: 100%;
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 	box-sizing: border-box;         /* IE 8+ */ 
+	text-align: left;
 }
 
 .infooknote {
@@ -210,6 +216,7 @@ body {
 	border-radius: 4px;
 	box-shadow: 0 0 5px #cacaca ;
 	display: none;
+	z-index: 3;
 }
 
 .createProjectBox input {
@@ -226,6 +233,7 @@ body {
 #content {
 	font-size:12px;
 	margin:10px 10px 10px 10px;
+	position: relative;
 }
 
 /* project details */
@@ -243,4 +251,72 @@ body {
 	margin:0 10px 10px 10px;
 	font-size:11px;
 	color:#333;
+}
+
+.connectWrap {
+	margin: 0 auto;
+	text-align: center;
+	
+}
+.connect {
+	display: inline-block;
+	width: 400px;
+	margin: 0 auto;
+	position: relative;
+}
+
+/* all the input except submit and checkbox */
+.connect input:not([type="checkbox"]), 
+.connect textarea{
+	width: 100%;
+	margin-bottom:10px;
+	margin: 0 -3px 10px -3px;
+	position:relative;
+	padding: 3px;	
+	border: 1px solid #c0c0c0;
+	-webkit-appearance: textfield;
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing : content-box;
+	box-sizing : content-box;
+	-webkit-box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.4) inset;
+	-moz-box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.4) inset;
+	box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.4) inset;
+	-webkit-transition: all 0.2s linear;
+	-moz-transition: all 0.2s linear;
+	-o-transition: all 0.2s linear;
+	transition: all 0.2s linear;
+	font-size:16px;
+}
+.connect input:not([type="checkbox"]):active,
+.connect input:not([type="checkbox"]):focus , 
+.connect textarea:active, 
+.connect textarea:focus {
+	border: 1px solid #c0c0c0;
+	background: rgba(238, 236, 240, 0.9);	
+	-webkit-box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.9) inset;
+	   -moz-box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.9) inset;
+	        box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.9) inset;
+} 
+
+.connect textarea {
+	height:150px;
+	resize:none;
+}
+
+.connect input:-moz-placeholder,
+.connect textarea:-moz-placeholder { 
+ 	color:rgba(50,50,50,0.5) !important;
+}
+
+.connect ::-webkit-input-placeholder { /* WebKit browsers */
+    color:rgba(50,50,50,0.5) !important;
+}
+.connect :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:rgba(50,50,50,0.5) !important;
+}
+.connect ::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:rgba(50,50,50,0.5) !important;
+}
+.connect :-ms-input-placeholder { /* Internet Explorer 10+ */
+    color:rgba(50,50,50,0.5) !important;
 }
