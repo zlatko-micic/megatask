@@ -7,7 +7,6 @@ Class Projects extends CI_Model {
 		$this->db->select('projects.id,
 			projects.title,
 			projects.date_created,
-			projects.date_created,
 			users.id as owner_id,
 			users.name as owner_name,
 			users.surname as last_name,
@@ -22,6 +21,25 @@ Class Projects extends CI_Model {
 		
 		$this->db->where('projects.id', $project_id);
 		$this->db->where('project_users.project_id', $project_id);
+		
+		$query = $this->db->get();
+		
+		if ($query -> num_rows() > 0) {
+			return $query->result();
+		}
+		else {	
+			return false;
+		}
+	}
+	
+	function userProjects($user_id) {
+		//get all project for user
+		
+		$this->db->select('projects.id,
+			projects.title');
+		$this->db->from('projects');
+		$this->db->join('project_users', 'project_users.project_id = projects.id ', 'left');		
+		$this->db->where('project_users.user_id', $user_id);
 		
 		$query = $this->db->get();
 		

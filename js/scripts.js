@@ -13,6 +13,22 @@ $(document).ready(function() {
 		}
 		else {
 			$(".createProjectBox").fadeIn();
+			//hide other boxes
+			$(".listProjectBox").fadeOut();
+		}
+		//alert('s');
+		e.preventDefault();
+	});
+	
+	//my projoects show/hide
+	$(".myProjectsTrigger").on('click', function(e) {
+		if ($(".listProjectBox").is(":visible") ) {
+			$(".listProjectBox").fadeOut();
+		}
+		else {
+			$(".listProjectBox").fadeIn();
+			//hide other boxes
+			$(".createProjectBox").fadeOut();
 		}
 		//alert('s');
 		e.preventDefault();

@@ -1,14 +1,10 @@
-home page
+home page / Overview
 
 <hr>
 
-   <h1>Create new project</h1>
-   
-   <?php
-   if (validation_errors()) {
-	   echo '<div class="infoerrornote"><em></em>'. validation_errors() .'</div>';
-   }
-   ?>
+<h1>Pending project invitations</h1>
 
+<hr>
 
+<h1>Tasks that have to be finished soon</h1>
 

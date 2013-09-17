@@ -25,11 +25,16 @@
 		<?php
 		//left menu
 		if ($this->session->userdata('logged_in')) {
-			echo '<ul class="leftmenu">';
-			echo '<li>';
-			echo "<img class=\"tiptip createProjectTrigger\" title=\"create new project\" src=\"".site_url('/images/icons/32x32/edit.png')."\">";
-			echo '</li>';
-			echo '</ul>';
+			$html = '';
+			$html .= '<ul class="leftmenu">' . "\n";
+			$html .= '<li>' . "\n";
+			$html .= '<img class="tiptip createProjectTrigger" title="Create new project" src="'.site_url('/images/icons/32x32/edit.png').'">' . "\n";
+			$html .= '</li>' . "\n";
+			$html .= '<li>' . "\n";
+			$html .= '<img class="tiptip myProjectsTrigger" title="My projects" src="'.site_url('/images/icons/32x32/categoty.png').'">' . "\n";
+			$html .= '</li>' . "\n";
+			$html .= '</ul>' . "\n";
+			echo $html;
 		}
 		?>
 		
@@ -41,18 +46,18 @@
 		$html .= '<ul class="rightmenu">' . "\n";
 		if ($this->session->userdata('logged_in')) {
 			$html .= '<li>' . "\n";
-			$html .= "<a href=\"".site_url('/settings')."\"><img class=\"tiptip\" title=\"Settings\" src=\"".site_url('/images/icons/32x32/my-account.png')."\"></a>" . "\n";
+			$html .= '<a href="'.site_url('/settings').'"><img class="tiptip" title="Settings" src="'.site_url('/images/icons/32x32/my-account.png').'"></a>' . "\n";
 			$html .= '</li>' . "\n";
 			$html .= '<li>' . "\n";
-			$html .= "<a href=\"".site_url('/home/logout')."\"><img class=\"tiptip\" title=\"Logout ".$session_data['name']."\" src=\"".site_url('/images/icons/32x32/sign-out.png')."\"></a>" . "\n";
+			$html .= '<a href="'.site_url('/home/logout').'"><img class="tiptip" title="Logout '.$session_data['name'].'" src="'.site_url('/images/icons/32x32/sign-out.png').'"></a>' . "\n";
 			$html .= '</li>' . "\n";
 		}
 		else {
 			$html .= '<li>' . "\n";
-			$html .= "<a href=\"".site_url('/login')."\"><img class=\"tiptip\" title=\"Login\" src=\"".site_url('/images/icons/32x32/login.png')."\"></a>" . "\n";
+			$html .= '<a href="'.site_url('/login').'"><img class="tiptip" title="Login" src="'.site_url('/images/icons/32x32/login.png').'"></a>' . "\n";
 			$html .= '</li>' . "\n";
 			$html .= '<li>' . "\n";
-			$html .= "<a href=\"".site_url('/registration')."\"><img class=\"tiptip\" title=\"Registration\" src=\"".site_url('/images/icons/32x32/customers.png')."\"></a>" . "\n";
+			$html .= '<a href="'.site_url('/registration').'"><img class="tiptip" title="Registration" src="'.site_url('/images/icons/32x32/customers.png').'"></a>' . "\n";
 			$html .= '</li>' . "\n";
 		}
 		$html .= '</ul>' . "\n";
@@ -79,6 +84,20 @@
 		$html .= '<input type="submit" value="Create"/>'. "\n";
 		$html .= '</form>'. "\n";
 		$html .= '<div id="createProjectRespond"></div>'. "\n";
+		$html .= '</div>'. "\n";
+		echo $html;
+	}
+    
+	?>
+	
+	<?php
+	// list of all projects
+	if (isset($my_projects)) {
+		$html = '';
+		$html .= '<div class="listProjectBox">'. "\n";
+		foreach ($my_projects as $my_project ) {
+			$html .= '<a href="'.site_url('/project/'.$my_project->id).'">'.$my_project->title.'</a><br>';
+		}
 		$html .= '</div>'. "\n";
 		echo $html;
 	}
