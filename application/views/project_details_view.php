@@ -1,4 +1,9 @@
 <script type="text/javascript">
+function formatSeconds(seconds) {
+    var date = new Date(1970,0,1);
+    date.setSeconds(seconds);
+    return date.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
+}
 $(function () {
     	
     	// Radialize the colors
@@ -12,56 +17,6 @@ $(function () {
 		    };
 		});
 		
-		/*
-		 old script 
-		 
-		
-		
-		// Build the chart
-        $('#containerRight').highcharts({
-            chart: {
-                plotBackgroundColor: null,
-                plotBorderWidth: null,
-                plotShadow: false,
-				backgroundColor:'rgba(255, 255, 255, 0)'
-            },
-			title:{
-				text:''
-			},
-            tooltip: {
-        	    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-            },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    dataLabels: {
-                        enabled: true,
-                        color: '#000000',
-                        connectorColor: '#000000',
-                        formatter: function() {
-                            return '<b>'+ this.point.name +'</b>: '+ Math.round(this.percentage) +' %';
-                        }
-                    }
-                }
-            },
-            series: [{
-                type: 'pie',
-                name: 'Browser share',
-                data: [
-					<?php
-						$html = '';
-						foreach ($project_details as $row) {
-							if ($row->seconds > 0) {
-								$html .= '[\''.$row->name.'\',   '.$row->seconds.'],'. "\n";
-							}
-						}
-						echo $html;
-					?>	
-                ]
-            }]
-        });
-		*/
 
         $('#containerLeft').highcharts({
             chart: {
@@ -88,10 +43,10 @@ $(function () {
                     var s;
                     if (this.point.name) { // the pie chart
                         s = ''+
-                            this.point.name +': worked '+ this.y +' seconds';
+                            this.point.name +': worked '+ formatSeconds(this.y) +' ';
                     } else {
                         s = ''+
-                            this.x  +': '+ this.y;
+                            this.x  +' : '+ formatSeconds(this.y);
                     }
                     return s;
                 }
@@ -122,7 +77,7 @@ $(function () {
                 }
             } , */ {
                 type: 'pie',
-                name: 'Total consumption',
+                name: 'Total worked',
                 data: [
 						<?php
 			$html = '';
