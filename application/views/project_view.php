@@ -1,3 +1,10 @@
+<div class="breadcrumb flat">
+	<a href="<?=site_url('/')?>">Home</a>
+	<a href="<?=site_url('/project/'. $this->uri->segment(2))?>"><?=$project_details[0]->title?></a>
+</div>
+
+<hr>
+
 <div id="leftRow">
 
 <h1><?=$project_details[0]->title?></h1>
