@@ -6,10 +6,13 @@ class Login extends CI_Controller {
 
 	function __construct() {
 		parent::__construct();
-		$this->load->model('user','',TRUE);
+		$this->load->model('user_model','',TRUE);
 	}
 	
 	function index() {
+		//page details
+		$data['page_details']['id'] = 2;
+		
 		if ($this->session->userdata('logged_in')) {
 			//already logged in
 			redirect('home', 'refresh');
@@ -47,7 +50,7 @@ class Login extends CI_Controller {
 		//query the database
 		
 		$password = hash("sha256", $password);
-		$result = $this->user->login($username, $password);
+		$result = $this->user_model->login($username, $password);
 	
 		if($result) {
 			$sess_array = array();

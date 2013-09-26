@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	
 	//background noise
-    $('body').noisy();
+    $('body, #content').noisy();
 	
 	//tooltips for links
 	$(".tiptip").tipTip();
@@ -33,10 +33,10 @@ $(document).ready(function() {
 		//alert('s');
 		e.preventDefault();
 	});
-
+	
+	//submit create project
 	$("#createProjectForm").on('submit', function() {
 		var title = $('#project_title').val();
-		//alert(title);
 		
 		$('#respond').html('&nbsp;').activity({segments: 8, width:2, space: 0, length: 3, color: '#ccc', speed: 1.5});
 		
@@ -48,7 +48,6 @@ $(document).ready(function() {
 			success: function (json) {
 				if (json.success) {
 					window.location.href = "/megatask/project/"+ json.project_id; //change this link
-					console.log(json.project_id)
 				}
 				else {
 					$('#createProjectRespond').html('<div class="infoerrornote"><em></em>'+ json.message +'</div>');
@@ -63,6 +62,38 @@ $(document).ready(function() {
 
     });
 	
+	//stopwatch
+	var $stopwatch = $('#show_working_stopwatch');
+
+    if ($stopwatch.length) {
+		var milseconds = parseInt($stopwatch.html());
+		
+		$stopwatch.stopwatch({startTime: milseconds}).stopwatch('start');
+    }
 	
+	//stop working
+	$("#stop_working_task").on('click', function() {		
+		$.ajax({
+			url: "http://localhost:8888/megatask/a/start_working/stop", //change this link
+			type: "POST",
+			data: { },
+			dataType: "json",
+			success: function (json) {
+				if (json.success) {
+					//refresh maybe
+					$('#show_working_stopwatch_details').fadeOut();
+				}
+				else {
+					alert(json.message);
+				}
+			},
+			error: function (xhr, ajaxOptions, thrownError) {
+				alert(xhr.status);
+			}
+		});
+
+		return false;
+
+    });
 	
 });

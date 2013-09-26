@@ -1,5 +1,5 @@
 <?php
-Class User extends CI_Model {
+Class User_model extends CI_Model {
     
 	function login($username, $password) {
 		$this -> db -> select('id, name');
@@ -18,6 +18,50 @@ Class User extends CI_Model {
 		}
 	}
  
+	function isWorkingOnTask($user_id) {
+		$this->db->select('working_hours.id,
+						tasks.title,
+						((-1000) * TIME_TO_SEC(TIMEDIFF(working_hours.started, NOW()))) as diff,
+						TIMEDIFF(working_hours.started, NOW()) as time_diff'
+						);
+		$this->db->from('working_hours');
+		$this->db->join('tasks', 'tasks.id = working_hours.task_id', 'left');
+		$this->db->where('working_hours.user_id', $user_id);
+		$this->db->where('working_hours.finished', '0000-00-00 00:00:00');
+		$this->db->limit(1);
+		
+		$query = $this->db->get();
+		
+		if ($query->num_rows() == 1) {
+			return $query->result();
+		}
+		else {
+			return false;
+		}
+	}
+	
+	function startWorkingOnTask($user_id, $task_id) {
+		$this->db->set('user_id', $user_id);
+		$this->db->set('task_id', $task_id);
+		$this->db->insert('working_hours');
+		
+		return ($this->db->affected_rows() != 1) ? false : true;
+	}
+	
+	function closeTask($user_id, $time) {
+		
+		 $data = array(
+               'finished' => $time
+            );
+
+		$this->db->where('user_id', $user_id);
+		$this->db->where('finished', '0000-00-00 00:00:00');
+		$this->db->update('working_hours', $data);
+
+		
+		return ($this->db->affected_rows() != 1) ? false : true;
+	}
+	
 	function is_email_registered($email) {
 		$this->db->select('id');
 		$this->db->from('users');
@@ -57,6 +101,37 @@ Class User extends CI_Model {
 		return ($this->db->affected_rows() != 1) ? false : true;
 	}
 	
+	function checkUserInvitation($user_id, $invitation_id) {
+		
+		$this->db->select('id');
+		$this->db->from('project_users');
+		$this->db->where('user_id', $user_id);
+		$this->db->where('id', $invitation_id);
+		$this -> db -> limit(1);
+		
+		$query = $this->db->get();
+		
+		if($query -> num_rows() > 0) {
+			return $query->result();
+		}
+		else {
+			return false;
+		}
+	}
+	
+	function acceptInvitation($invitation_id, $active) {
+		
+		 $data = array(
+               'active' => $active
+            );
+
+		$this->db->where('id', $invitation_id);
+		$this->db->update('project_users', $data);
+
+		
+		return ($this->db->affected_rows() != 1) ? false : true;
+	}
+	
 	function sendInvite($email, $project_id) {
 		$this->db->set('email', $email);
 		$this->db->set('project_id', $project_id);
@@ -83,7 +158,7 @@ Class User extends CI_Model {
 	
 	function deleteEmailInvitations($email) {
 		$this->db->where('email', $email);
-		$this->db->delete('mytable');
+		$this->db->delete('invitations');
 		
 		$query = $this->db->get();
 		

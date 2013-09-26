@@ -25,21 +25,21 @@ class A_create_project extends CI_Controller {
 			if ($this->form_validation->run() == FALSE) {
 				// form not submited
 				$json['success'] = false;
-				$json['message'] = validation_errors();;
+				$json['message'] = validation_errors();
 			}
 			else {
 				//form is submited
 				
 				//insert project into DB
-				$this->load->model('projects','',FALSE);
+				$this->load->model('project_model','',FALSE);
 				
-				if($this->projects->insertProject($this->input->post('title'), $data['session_data']['user_id'])) {
+				if($this->project_model->insertProject($this->input->post('title'), $data['session_data']['user_id'])) {
 					/* project in db
 					 * add this user in user_project tabele
 					 */
 					$project_id = $this->db->insert_id();
 					$date =  date("Y-m-d H:i:s");
-					if($this->projects->addUser($project_id, $data['session_data']['user_id'], 1, $date, 1, 0)) {
+					if($this->project_model->addUser($project_id, $data['session_data']['user_id'], 1, $date, 1, 0)) {
 						//user added to project. send informations
 						$json['success'] = true;
 						$json['project_id'] = $project_id;

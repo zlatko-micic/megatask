@@ -1,5 +1,5 @@
 <?php
-Class Tasks extends CI_Model {
+Class Task_model extends CI_Model {
     
 	function checkUserPrivilege($user_id, $task_id) {
 		/*
@@ -18,6 +18,32 @@ Class Tasks extends CI_Model {
 		
 		if($query -> num_rows() > 0) {
 			return TRUE;
+		}
+		else {
+			return FALSE;
+		}
+		
+	}
+	
+	function comingTasks($user_id) {
+		/*
+		 * Tasks that have to be finished soon 
+		 */
+		
+		$this->db->select('tasks.id, tasks.title, tasks.due_date, projects.title as project');
+		$this->db->from('tasks');
+		$this->db->join('task_users', 'task_users.task_id = tasks.id', 'left');
+		$this->db->join('projects', 'projects.id = tasks.project_id', 'left');
+		$this->db->where('task_users.user_id', $user_id);
+		$this->db->where('tasks.active', 1);
+		$this->db->where('tasks.due_date !=','0000-00-00 00:00:00');
+		$this->db->where('tasks.due_date <=','DATE_ADD(NOW(),INTERVAL 7 DAYS )');
+		$this->db->order_by('tasks.due_date', 'asc');
+		
+		$query = $this->db-> get();
+		
+		if($query -> num_rows() > 0) {
+			return $query->result();
 		}
 		else {
 			return FALSE;
@@ -65,9 +91,10 @@ Class Tasks extends CI_Model {
     
 	function taskMessages($id) {
 		//get messages and their authors
-		$this->db->select('messages.text, messages.date, users.id, users.name, users.surname');
+		$this->db->select('messages.text as textmessage, messages.date, users.id, users.name, users.surname, files.id as file_id, files.original_file_name');
 		$this->db->from('messages');
 		$this->db->join('users', 'users.id = messages.user_id', 'left');
+		$this->db->join('files', 'files.message_id = messages.id', 'left');
 		$this->db->where('task_id', $id);
 		//$this -> db -> limit(1);
 		
@@ -82,7 +109,7 @@ Class Tasks extends CI_Model {
 	}
 	
 	function taskWorkingHours($id) {
-		//get working hours and their users
+		//get working hours and their users for particular task
 		$this->db->select('working_hours.id,
 			working_hours.started as date,
 			working_hours.started,
@@ -94,6 +121,7 @@ Class Tasks extends CI_Model {
 		$this->db->from('working_hours');
 		$this->db->join('users', 'users.id = working_hours.user_id', 'left');
 		$this->db->where('working_hours.task_id', $id);
+		$this->db->order_by('working_hours.started', 'desc');
 		
 		$query = $this->db->get();
 		
@@ -124,5 +152,62 @@ Class Tasks extends CI_Model {
 		
 		return ($this->db->affected_rows() != 1) ? false : true;
 	}
+	
+	function createTask($title, $description, $user_id, $project_id, $priority, $due_date) {
+		//create new task
+		$data = array (
+			'title' => $title,
+			'description' => $description,
+			'user_id' => $user_id,
+			'project_id' => $project_id,
+			'active' => 1,
+			'priority' => $priority,
+			'due_date' => $due_date,
+		);
+		
+		$this->db->insert('tasks', $data);
+		
+		return ($this->db->affected_rows() < 1) ? false : true;
+		
+	}
+	
+	function addUser($user_id, $task_id) {
+		//assign user for task
+		$data = array (
+			'user_id' => $user_id,
+			'task_id' => $task_id
+		);
+		
+		$this->db->insert('task_users', $data);
+		
+		return ($this->db->affected_rows() < 1) ? false : true;
+		
+	}
+	
+	function projectTasks($project_id) {
+		//get all task for project
+		$this->db->select('tasks.id,
+			tasks.title,
+			tasks.description,
+			tasks.active,
+			tasks.priority,
+			tasks.due_date,
+			GROUP_CONCAT(DISTINCT(task_users.user_id)) as user_ids');
+		$this->db->from('tasks');
+		$this->db->join('task_users', 'task_users.task_id = tasks.id', 'left');
+		$this->db->where('tasks.project_id', $project_id);
+		$this->db->group_by('tasks.id');
+		
+		$query = $this->db->get();
+		
+		if ($query -> num_rows() > 0) {
+			return $query->result();
+		}
+		else {	
+			return false;
+		}
+	}
+	
+	
 	
 }

@@ -6,6 +6,10 @@
 		if (validation_errors()) {
 		   echo '<div class="infoerrornote"><em></em>'. validation_errors() .'</div>';
 		}
+		
+		if (isset($registration['message'])) {
+		   echo '<div class="infooknote"><em></em>'. $registration['message'] .'</div>';
+		}
 		?>
 		<?php echo form_open('login'); ?>
 

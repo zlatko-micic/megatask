@@ -65,7 +65,7 @@
 			<br/>
 
 			<?php echo $captcha['image']; ?><br/>
-			<label for="captcha">Captcha:</label><br/>
+			<label for="captcha">Captcha (case-insensitive):</label><br/>
 			<?php
 			echo form_input(array(
 				'name' => 'captcha',

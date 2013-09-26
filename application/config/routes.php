@@ -46,6 +46,7 @@ $route['a/(.*)'] = "a_$1";
 $route['task/:num'] = "task";
 $route['project/:num'] = "project";
 $route['project-details/:num'] = "project_details";
+$route['task-create/:num'] = "task_create";
 
 
 /* End of file routes.php */

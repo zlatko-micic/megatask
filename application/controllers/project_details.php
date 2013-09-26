@@ -6,20 +6,24 @@ class Project_details extends CI_Controller {
 
 	function __construct() {
 		parent::__construct();
-		$this->load->model('projects','',TRUE);
+		$this->load->model('project_model','',TRUE);
+		$this->load->model('user_model','',TRUE);
 	}
 	
 	function index() {
+		//page details
+		$data['page_details']['id'] = 7;
+		
 		if ($this->session->userdata('logged_in')) {
 			//get session data
 			$data['session_data'] = $this->session->userdata('logged_in');
 			
 			//check if user can see this project
-			if ($this->projects->checkUserPrivilege($data['session_data']['user_id'], $this->uri->segment(2))) {
+			if ($this->project_model->checkUserPrivilege($data['session_data']['user_id'], $this->uri->segment(2))) {
 				//user is allowed to see details
 				
 				//get working hours
-				$data['project_details'] = $this->projects->getWorkingHours($this->uri->segment(2));
+				$data['project_details'] = $this->project_model->getWorkingHours($this->uri->segment(2));
 				
 				//sum all time in seconds
 				$data['sum_seconds'] = 0;
@@ -82,9 +86,9 @@ class Project_details extends CI_Controller {
 				$data['highchart'] = $a_highchart;
 				$data['dates'] = $a_dates;
 				
-				//echo '<pre>';
-				//print_r ($a_highchart);
-				//echo '</pre>';
+				//get all projects
+				$data['my_projects'] = $this->project_model->userProjects($data['session_data']['user_id']);
+				
 				
 				$this->template->load('template', 'project_details_view', $data);
 			}

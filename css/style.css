@@ -53,7 +53,8 @@ h1 {
 	text-shadow: 1px 1px 0px #fff;
 }
 body {
-	background:#f3f3f3;
+	background-color:#DCDCDC;
+	background-color: #666;
 }
 
 .infoerrornote , .infonote, .infooknote {
@@ -67,7 +68,6 @@ body {
 	box-shadow: 0 1px 0 0 #fff inset, 0 -1px 2px #fff inset;
 	position:relative;
 	font-size:14px;
-	font-family:'BlanchCaps' !important;
 	width: 100%;
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
@@ -161,6 +161,172 @@ body {
 	background: transparent url("../images/error.png") -192px -16px;
 }
 
+.accept , .reject{
+	cursor:pointer;
+	position:relative;
+	padding:5px 20px 5px 20px;
+	
+	border: 1px solid #878787;
+	box-shadow: 0 1px 0 0 #DCDCDC inset, 0 -1px 1px #ACACAC inset;
+	color: #fff;
+	text-shadow: 0px 1px 0px #333;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	line-height:25px;
+	text-align: center;
+	font-size:16px;
+	margin:  3px 3px 3px 0;
+	display: inline-block;
+}
+
+.accept{
+	background-image: linear-gradient(bottom, #878787 30%, #BABABA 100%);
+	background-image: -o-linear-gradient(bottom, #878787 30%, #BABABA 100%);
+	background-image: -moz-linear-gradient(bottom, #878787 30%, #BABABA 100%);
+	background-image: -webkit-linear-gradient(bottom, #878787 30%, #BABABA 100%);
+	background-image: -ms-linear-gradient(bottom, #878787 30%, #BABABA 100%);
+	
+	background-image: -webkit-gradient(
+	linear,
+	left bottom,
+	left top,
+	color-stop(0.3, #878787),
+	color-stop(1, #BABABA)
+	);
+}
+
+.reject {	
+	background-image: linear-gradient(bottom, #410000 30%, #750000 100%);
+	background-image: -o-linear-gradient(bottom, #410000 30%, #750000 100%);
+	background-image: -moz-linear-gradient(bottom, #410000 30%, #750000 100%);
+	background-image: -webkit-linear-gradient(bottom, #410000 30%, #750000 100%);
+	background-image: -ms-linear-gradient(bottom, #410000 30%, #750000 100%);
+	
+	background-image: -webkit-gradient(
+	linear,
+	left bottom,
+	left top,
+	color-stop(0.3, #410000),
+	color-stop(1, #750000)
+	);
+}
+
+.submitForm {
+	cursor:pointer;
+	position:relative;
+	padding:5px 20px 5px 20px;
+	
+	border: 1px solid #878787;
+	box-shadow: 0 1px 0 0 #DCDCDC inset, 0 -1px 1px #ACACAC inset;
+	color: #fff;
+	text-shadow: 0px 1px 0px #333;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	line-height:25px;
+	text-align: center;
+	font-size:16px;
+	
+	background-image: linear-gradient(bottom, #878787 30%, #BABABA 100%);
+	background-image: -o-linear-gradient(bottom, #878787 30%, #BABABA 100%);
+	background-image: -moz-linear-gradient(bottom, #878787 30%, #BABABA 100%);
+	background-image: -webkit-linear-gradient(bottom, #878787 30%, #BABABA 100%);
+	background-image: -ms-linear-gradient(bottom, #878787 30%, #BABABA 100%);
+	
+	background-image: -webkit-gradient(
+	linear,
+	left bottom,
+	left top,
+	color-stop(0.3, #878787),
+	color-stop(1, #BABABA)
+	);
+}
+
+#leftRow, #rightRow {
+	display:block;
+	float:left;
+	position:relative;
+	width: 50%;
+	padding: 0px 2px 0 2px;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* IE 8+ */ 
+}
+
+#thirdLeftRow, #thirdMiddleRow, #thirdRightRow {
+	display:block;
+	float:left;
+	position:relative;
+	width: 33.3%;
+	padding: 0px 2px 0 2px;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* IE 8+ */ 
+}
+
+.menuList {
+	margin:5px 0 3px 0;
+	padding:0;
+	display:inline-block;
+	border-radius:3px;
+	-webkit-border-radius:3px;
+	-moz-border-radius:3px;
+	border-radius: 3px;
+	
+	position:relative;
+	border:#a1a1a1 solid 1px;
+	/*start gradient*/
+	background: #dddede; /* Old browsers */
+	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+	background: -moz-linear-gradient(top,  #ffffff 16%, #dddede 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(16%,#ffffff), color-stop(100%,#dddede)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #ffffff 16%,#dddede 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #ffffff 16%,#dddede 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #ffffff 16%,#dddede 100%); /* IE10+ */
+	background: linear-gradient(top,  #ffffff 16%,#dddede 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#dddede',GradientType=0 ); /* IE6-8 */
+	/*end gradient*/
+}
+
+.menuList li {
+	display:inline-block;
+	line-height:18px;
+	font-size:10px;
+	padding:0 10px 0 10px;
+	color:#969994;
+	cursor:pointer;
+	margin:0;
+	text-shadow:0px 1px 0px #fff;
+}
+
+
+.menuList li input {
+	display:none;
+}
+
+.menuList li:hover {
+	color:#000;
+}
+
+
+.menuList li.selected {
+	box-shadow:inset 0 0 3px #5a6e7e;
+	color:#234551;
+	background:#eaeaea;
+	text-shadow:0px 1px 0px #fff;
+}
+
+.menuList li a {
+	text-decoration:none;
+	color:#868686;
+}
+
+.menuList li.selected a {
+	color:#000;
+}
+/* end common*/
+
 #header {
 	position:relative;
 	height:40px;
@@ -170,6 +336,7 @@ body {
 	text-align:center;
 	background:#FCFCFC;
 	color:#303030;
+	border-bottom: solid 3px #9EEB62;
 	box-shadow: 1px 0px 2px rgba(0,0,0,0.5);
 	-webkit-box-shadow: 1px 0px 2px rgba(0,0,0,0.5);
 	-moz-box-shadow: 1px 0px 2px rgba(0,0,0,0.5);
@@ -246,14 +413,42 @@ body {
 	z-index: 3;
 }
 
+#show_working_stopwatch_details {
+	position: absolute;
+	top: 8px;
+	right: 80px;
+	padding: 10px 10px 10px 10px;
+	background-color: #fff;
+	width: 200px;
+	-moz-border-radius: 4px;
+	-khtml-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	box-shadow: 0 0 5px #cacaca ;
+	z-index: 3;
+}
+
 .listProjectBox a {
 	color:#303030;
 	text-decoration: none;
 }
 #content {
 	font-size:12px;
-	margin:10px 10px 10px 10px;
+	margin:0;
+	padding: 10px 10px 10px 10px;
 	position: relative;
+	overflow: visible;
+	background-color: #f3f3f3;
+}
+
+#content:after {
+	clear: both;
+	display: block;
+	height: 0;
+	overflow: hidden;
+	visibility: hidden;
+	content: ".";
+	font-size: 0;
 }
 
 /* project details */
@@ -268,9 +463,14 @@ body {
 	box-sizing: border-box;         /* IE 8+ */ 	
 }
 .footer {
-	margin:0 10px 10px 10px;
+	margin:0px 0px 10px 0px;
+	padding: 20px 10px 10px 10px;
 	font-size:11px;
-	color:#333;
+	color:#fff;
+	text-shadow: 0px 1px 0px #000;
+	clear: both;
+	border-top: solid 3px #9EEB62;
+	position: relative;
 }
 
 .connectWrap {
@@ -283,6 +483,16 @@ body {
 	width: 400px;
 	margin: 0 auto;
 	position: relative;
+}
+
+.taskList li {
+	padding: 5px 0 5px 0;
+	border-bottom: dotted 1px #cacaca;
+}
+
+.taskList li a {
+	text-decoration: none;
+	color: #000;
 }
 
 /* all the input except submit and checkbox */
@@ -339,4 +549,119 @@ body {
 }
 .connect :-ms-input-placeholder { /* Internet Explorer 10+ */
     color:rgba(50,50,50,0.5) !important;
+}
+
+/* breadcrumbs */
+.breadcrumb {
+	/*centering*/
+	display: inline-block;
+	box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.35);
+	overflow: hidden;
+	border-radius: 5px;
+	/*Lets add the numbers for each link using CSS counters. flag is the name of the counter. to be defined using counter-reset in the parent element of the links*/
+	counter-reset: flag; 
+}
+
+.breadcrumb a {
+	text-decoration: none;
+	outline: none;
+	display: block;
+	float: left;
+	font-size: 12px;
+	line-height: 20px;
+	color: white;
+	/*need more margin on the left of links to accomodate the numbers*/
+	padding: 0 10px 0 50px;
+	background: #666;
+	background: linear-gradient(#666, #333);
+	position: relative;
+}
+/*since the first link does not have a triangle before it we can reduce the left padding to make it look consistent with other links*/
+.breadcrumb a:first-child {
+	padding-left: 46px;
+	border-radius: 5px 0 0 5px; /*to match with the parent's radius*/
+}
+.breadcrumb a:first-child:before {
+	left: 14px;
+}
+.breadcrumb a:last-child {
+	border-radius: 0 5px 5px 0; /*this was to prevent glitches on hover*/
+	padding-right: 20px;
+}
+
+/*hover/active styles*/
+.breadcrumb a.active, .breadcrumb a:hover{
+	background: #333;
+	background: linear-gradient(#333, #000);
+}
+.breadcrumb a.active:after, .breadcrumb a:hover:after {
+	background: #333;
+	background: linear-gradient(135deg, #333, #000);
+}
+
+/*adding the arrows for the breadcrumbs using rotated pseudo elements*/
+.breadcrumb a:after {
+	content: '';
+	position: absolute;
+	top: 0; 
+	right: -10px; /*half of square's length*/
+	/*same dimension as the line-height of .breadcrumb a */
+	width: 20px; 
+	height: 20px;
+	/*as you see the rotated square takes a larger height. which makes it tough to position it properly. So we are going to scale it down so that the diagonals become equal to the line-height of the link. We scale it to 70.7% because if square's: 
+	length = 1; diagonal = (1^2 + 1^2)^0.5 = 1.414 (pythagoras theorem)
+	if diagonal required = 1; length = 1/1.414 = 0.707*/
+	transform: scale(0.707) rotate(45deg);
+	/*we need to prevent the arrows from getting buried under the next link*/
+	z-index: 1;
+	/*background same as links but the gradient will be rotated to compensate with the transform applied*/
+	background: #666;
+	background: linear-gradient(135deg, #666, #333);
+	/*stylish arrow design using box shadow*/
+	box-shadow: 
+		2px -2px 0 2px rgba(0, 0, 0, 0.4), 
+		3px -3px 0 2px rgba(255, 255, 255, 0.1);
+	/*
+		5px - for rounded arrows and 
+		50px - to prevent hover glitches on the border created using shadows*/
+	border-radius: 0 5px 0 50px;
+	text-align: center;
+	display: inline-block;
+}
+/*we dont need an arrow after the last link*/
+.breadcrumb a:last-child:after {
+	content: none;
+}
+/*we will use the :before element to show numbers*/
+.breadcrumb a:before {
+	content: counter(flag);
+	counter-increment: flag;
+	/*some styles now*/
+	border-radius: 100%;
+	width: 20px;
+	height: 20px;
+	line-height: 20px;
+	margin: 0px 0;
+	position: absolute;
+	top: 0;
+	left: 20px;
+	background: #444;
+	background: linear-gradient(#444, #222);
+	font-weight: bold;
+	text-align: center;
+}
+
+
+.flat a, .flat a:after {
+	background: white;
+	color: black;
+	transition: all 0.5s;
+}
+.flat a:before {
+	background: white;
+	box-shadow: 0 0 0 1px #ccc;
+}
+.flat a:hover, .flat a.active, 
+.flat a:hover:after, .flat a.active:after{
+	background: #9EEB62;
 }

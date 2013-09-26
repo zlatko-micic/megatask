@@ -1,5 +1,5 @@
 <?php
-Class Projects extends CI_Model {
+Class Project_model extends CI_Model {
 	
 	function projectDetails($project_id) {
 		//get main infos about task
@@ -13,14 +13,38 @@ Class Projects extends CI_Model {
 			GROUP_CONCAT(DISTINCT(u.name)) as names,
 			GROUP_CONCAT(DISTINCT(u.surname)) as last_names,
 			GROUP_CONCAT(DISTINCT(u.id)) as ids');
+		
 		$this->db->from('projects');
 		$this->db->join('users', 'users.id = projects.user_id ', 'left');
 		$this->db->join('project_users', 'project_users.project_id = projects.id ', 'left');
-		
-		$this->db->join('users u', 'users.id = project_users.user_id ', 'left');
+		$this->db->join('users u', 'users.id = project_users.user_id', 'left');
 		
 		$this->db->where('projects.id', $project_id);
 		$this->db->where('project_users.project_id', $project_id);
+		$this->db->where('project_users.active', 1);
+		
+		$query = $this->db->get();
+		
+		if ($query -> num_rows() > 0) {
+			return $query->result();
+		}
+		else {	
+			return false;
+		}
+	}
+	
+	function projectUsers($project_id) {
+		//get main infos about task
+		$this->db->select('
+			users.id,
+			users.name,
+			users.surname
+			');
+		$this->db->from('project_users');
+		$this->db->join('users', 'users.id = project_users.user_id ', 'left');
+		
+		$this->db->where('project_users.project_id', $project_id);
+		$this->db->where('project_users.active', 1);
 		
 		$query = $this->db->get();
 		
@@ -40,6 +64,32 @@ Class Projects extends CI_Model {
 		$this->db->from('projects');
 		$this->db->join('project_users', 'project_users.project_id = projects.id ', 'left');		
 		$this->db->where('project_users.user_id', $user_id);
+		$this->db->where('project_users.active', 1);
+		
+		$query = $this->db->get();
+		
+		if ($query -> num_rows() > 0) {
+			return $query->result();
+		}
+		else {	
+			return false;
+		}
+	}
+	
+	function pendingProjects($user_id) {
+		//get all project for user
+		
+		$this->db->select('project_users.id,
+			project_users.date_sent,
+			projects.title,
+			users.name,
+			users.surname
+			');
+		$this->db->from('project_users');
+		$this->db->join('projects', 'projects.id = project_users.project_id ', 'left');
+		$this->db->join('users', 'users.id = projects.user_id ', 'left');
+		$this->db->where('project_users.user_id', $user_id);
+		$this->db->where('project_users.active', 0);
 		
 		$query = $this->db->get();
 		
@@ -90,10 +140,11 @@ Class Projects extends CI_Model {
 		$this->db->from('project_users');
 		$this->db->where('user_id', $user_id);
 		$this->db->where('project_id', $project_id);
+		$this->db->where('active', 1);
 		
-		$query = $this -> db -> get();
+		$query = $this->db->get();
 		
-		if($query -> num_rows() > 0) {
+		if($query->num_rows() > 0) {
 			return TRUE;
 		}
 		else {
