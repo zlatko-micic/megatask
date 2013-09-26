@@ -25,6 +25,14 @@ $(function () {
             title: {
                 text: ''
             },
+			yAxis:{
+				labels: {
+					enabled: false
+				},
+				title: {
+					text: null
+				}
+			},
             xAxis: {
 			
 			<?php
