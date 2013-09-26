@@ -1,7 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-session_start();
-
 class Project extends CI_Controller {
 
 	function __construct() {

@@ -1,7 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-session_start();
-
 class Task_create extends CI_Controller {
 
 	function __construct() {
