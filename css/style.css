@@ -40,6 +40,15 @@ abbr, acronym
   cursor: help;
 }
 
+hr {
+	height:0;
+	border-top:#b7b7b7 solid 1px;
+	border-bottom:#fff solid 1px;
+	border-left:none;
+	border-right:none;
+	clear:both;
+	margin:5px 0 5px 0;
+}
 /* end reset */
 
 /* start common  */
@@ -485,6 +494,10 @@ body {
 	position: relative;
 }
 
+.taskList {
+	padding: 0 0 5px 0;
+}
+
 .taskList li {
 	padding: 5px 0 5px 0;
 	border-bottom: dotted 1px #cacaca;
@@ -493,6 +506,46 @@ body {
 .taskList li a {
 	text-decoration: none;
 	color: #000;
+}
+
+.taskList li.important a {
+	color: red;
+}
+
+em.menu_dropdown {
+	position:relative;
+	width:16px;
+	height:16px;
+	background: transparent url("../images/menu_dropdown.png") no-repeat center center;
+	top:3px;
+	display:inline-block;
+	cursor: pointer;
+	margin: 0 3px 0 0 ;
+}
+em.pencil_edit {
+	position:relative;
+	width:16px;
+	height:16px;
+	background: transparent url("../images/pencil_small.png") no-repeat center center;
+	top:3px;
+	display:inline-block;
+	cursor: pointer;
+	margin: 0 3px 0 0 ;
+}
+
+em.delete {
+	position:relative;
+	width:16px;
+	height:16px;
+	background: transparent url("../images/edit_delete.png") no-repeat center center;
+	top:3px;
+	display:inline-block;
+	cursor: pointer;
+	margin: 0 3px 0 0 ;
+}
+
+.hidden_details {
+	display: none;
 }
 
 /* all the input except submit and checkbox */

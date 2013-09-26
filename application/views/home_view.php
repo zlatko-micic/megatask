@@ -6,7 +6,11 @@
 		
 		$html .= '<ul class="taskList">' . "\n";
 		foreach ($due_task as $row) {
-			$html .= '<li>' . "\n";
+			//add css class for tasks that are overdue
+			$time_now = date("Y-m-d H:i:s");
+			$css = $row->due_date <= $time_now ? 'important' : '';
+			
+			$html .= '<li class="'.$css.'">' . "\n";
 			$html .= '<a href="'.site_url('/task/'.$row->id).'"><b>'. $row->title .'</b><br>' . "\n";
 			$html .= 'Project: '. $row->project .'<br>' . "\n";
 			$html .= 'Due '. $row->due_date .'</a>' . "\n";

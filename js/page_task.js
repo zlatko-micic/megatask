@@ -1,3 +1,11 @@
+function formatSeconds(seconds)
+{
+    var date = new Date(1970,0,1);
+    date.setSeconds(seconds);
+    return date.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
+}
+
+
 $(document).ready(function() {
 	
 	//hide tasks
@@ -41,4 +49,54 @@ $(document).ready(function() {
 		return false;
 	});
 	
+	//filter working hours
+	$('#filter_working_hours li').on("click",function() {
+		$(this).siblings().removeClass('selected');
+		$(this).addClass('selected');
+		
+		var m = parseInt($(this).data('id'));
+		
+		if (m > 0) {
+			$('#working_hours_list li').each(function() {
+				var uID = parseInt($(this).data('user'));
+				//alert(uID);
+				
+				if (uID !== m) {
+					$(this).hide();
+					
+				}
+				else {
+					$(this).show();
+				}
+			});
+		}
+		else {
+			$('#working_hours_list li').show();
+			//alert('out');
+		}
+		
+		//get all visible datas
+		var sumall = 0;
+		$('#working_hours_list li').each(function() {
+			if ($(this).is(":visible")) {
+				m = $(this).data('seconds');
+				
+				sumall = sumall + m;
+			}
+		});
+		$("#sumall").html(formatSeconds(sumall));
+		
+	});
+	
+	//scroll down working details
+	
+
+	$( ".menu_dropdown" ).click(function() {
+		//alert('s');
+		$(this).parent().find(".hidden_details").toggle("fast",function() {
+
+		});
+	});
+	
+	$('#filter_working_hours li:first').click();
 });

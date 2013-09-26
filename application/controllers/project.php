@@ -68,8 +68,8 @@ class Project extends CI_Controller {
 								'protocol' => 'smtp',
 								'smtp_host' => 'ssl://smtp.googlemail.com',
 								'smtp_port' => 465,
-								'smtp_user' => 'zlatkomicic@gmail.com',
-								'smtp_pass' => 'tkozla265262',
+								'smtp_user' => 'user',
+								'smtp_pass' => 'pass',
 								'mailtype'  => 'html', 
 								'charset'   => 'iso-8859-1'
 							);

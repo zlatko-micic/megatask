@@ -68,6 +68,7 @@ Class Task_model extends CI_Model {
 			u_d.surname as done_last_name,
 			projects.id as project_id,
 			projects.title as project,
+			GROUP_CONCAT(DISTINCT(u.id)) as ids,
 			GROUP_CONCAT(DISTINCT(u.name)) as names,
 			GROUP_CONCAT(DISTINCT(u.surname)) as last_names');
 		$this->db->from('tasks');
@@ -117,7 +118,9 @@ Class Task_model extends CI_Model {
 			working_hours.description,
 			users.id as user_id,
 			users.name,
-			users.surname, TIMEDIFF(working_hours.finished,working_hours.started) AS time_done', false);
+			users.surname,
+			TIME_TO_SEC(TIMEDIFF(working_hours.finished,working_hours.started)) AS seconds,
+			TIMEDIFF(working_hours.finished,working_hours.started) AS time_done', false);
 		$this->db->from('working_hours');
 		$this->db->join('users', 'users.id = working_hours.user_id', 'left');
 		$this->db->where('working_hours.task_id', $id);

@@ -13,62 +13,109 @@ if (isset($error_message)) {
 <hr>
 
 <div id="thirdLeftRow">
-	<h1><?=$task_info[0]->title?></h1>
-	<?=$task_info[0]->description?><br>
-	created on <?=date('D j. M Y H:i',strtotime($task_info[0]->date_created));?> by <?=$task_info[0]->admin_name?> <?=$task_info[0]->admin_lastname?><br>
-	
-	Task assigned for user(s):<br>
-	<?php
-	$html = '';
-	foreach ($task_info[0]->task_users as $row) {
-		$html .= $row['name'] . ' ' . $row['last_name'] .' <br> ';
-	}
-	echo $html;
-	?>
+	<ul class="taskList">
+		<li><h1><?=$task_info[0]->title?></h1></li>
+		<li><?=$task_info[0]->description?></li>
+		<li>created on <?=date('D j. M Y H:i',strtotime($task_info[0]->date_created));?> by <?=$task_info[0]->admin_name?> <?=$task_info[0]->admin_lastname?></li>
+		<li>Task assigned for user(s):<br>
+		<?php
+		$html = '';
+		foreach ($task_info[0]->task_users as $row) {
+			$html .= $row['name'] . ' ' . $row['last_name'] .' <br> ';
+		}
+		echo $html;
+		?></li>
+	</ul>
+
 	<?php
 	echo '<pre>';
 	//print_r($task_info);
 	echo '</pre>';
 	?>
 
-	<hr>
-<a class="tiptip" title="Start working on this task" href="#" id="task_working" data-id="<?=$this->uri->segment(2)?>"><img src="<?php echo base_url('images/icons/32x32/old-versions.png'); ?>" /></a>
-
-<span id="ajax_working_activity"></span>
-<div id="respond_working"></div>
+	<br>
+	<a class="tiptip" title="Start working on this task" href="#" id="task_working" data-id="<?=$this->uri->segment(2)?>"><img src="<?php echo base_url('images/icons/32x32/old-versions.png'); ?>" /></a> 
+	<a class="tiptip" title="close this task" href="#" id="task_close" data-id="<?=$this->uri->segment(2)?>"><img src="<?php echo base_url('images/icons/32x32/finished-work.png'); ?>" /></a>
+	<span id="ajax_working_activity"></span>
+	<div id="respond_working"></div>
 
 	<hr>
 	<h1>Working hours</h1>
 	<?php
+	//list of users for filtering
+	$html = '';
 	if ($working_hours) {
-		$html = '';
-		$html .= '<ul class="taskList">' . "\n";
+		$html .= '<ul class="menuList" id="filter_working_hours">';
+		$html .= '<li data-id="0" class="selected">All</li>' . "\n";
+		foreach ($task_info[0]->task_users as $row) {
+			$html .= '<li data-id="'.$row['id'] .'">' . "\n";
+			$html .= $row['name'] .' '. $row['last_name'] . "\n";
+			$html .= '</li>' . "\n";
+			
+		}
+		$html .= '</ul>'. "\n";
+	}
+	echo $html;
+	?>
+	<br>
+	total time: <span id="sumall">0</span>
+	<hr>
+	<?php
+	//list of working hours
+	$html = '';
+	if ($working_hours) {
+		$html .= '<ul class="taskList" id="working_hours_list">' . "\n";
 		foreach ($working_hours as $row) {
-			$html .= '<li>' . "\n";
-			$html .= $row->name .' '. $row->surname . '<br>' . "\n";
+			$html .= '<li data-user="'. $row->user_id .'" data-seconds="'. $row->seconds .'">' . "\n";
+			
+			$html .= '<em class="menu_dropdown tiptip" title="Toggle details"></em>' . "\n";
+			
+			//edit/delete options if owner
+			if ($session_data['user_id'] == $row->user_id) {
+				$html .= '<a href="#"><em class="pencil_edit"></em></a>' . "\n";
+				$html .= '<a href="#"><em class="delete"></em></a>' . "\n";
+			}
+			
+			$html .= $row->name .' '. $row->surname .' ('. date('d. n. Y H:i',strtotime($row->started)).') ' . "\n";
+			
+			$html .= '<div class="hidden_details">' . "\n";
+			
 			if ($row->finished == "0000-00-00 00:00:00") {
 				$html .= 'working right now!'. "\n";
 			}
 			else {
-				$html .= 'started on'.$row->started.' finished on '.$row->finished.'<br>'. "\n";
-				$html .= 'total '.$row->time_done . "\n";
+				$html .= 'started on <b>'.date('d. n. Y H:i',strtotime($row->started)).'</b> finished on <b>'.date('d. n. Y H:i',strtotime($row->finished)).'</b><br>'. "\n";
+				$html .= 'total '.$row->time_done .'<br>'. "\n";
+				
+				//show description if exists
+				if ($row->description != '') {
+					$html .= $row->description . "\n";
+				}
+				else {
+					$html .= '<i>No Description</i>' . "\n";
+				}
+				
 			}
+			$html .= '</div>' . "\n";
 			$html .= '</li>' . "\n";
 		}
 		
 		$html .= '</ul>' . "\n";
-		
-		echo $html;
 	}
+	else {
+		$html .=  '<div class="infonote"><em></em> Nobody didn\'t work on this task</div>';
+	}
+	echo $html;
+	
+	
 ?>
 </div>
 
 <div id="thirdMiddleRow">
 	<h1>Messages</h1>
 	<?php
-	
+	$html = '';
 	if ($messages) {
-		$html = '';
 		$html .= '<ul class="taskList">' . "\n";
 		foreach ($messages as $row) {
 			$html .= '<li>' . "\n";
@@ -86,8 +133,11 @@ if (isset($error_message)) {
 		
 		$html .= '</ul>' . "\n";
 		
-		echo $html;
 	}
+	else {
+		$html .= '<div class="infonote"><em></em> No messages in this task</div>';
+	}
+	echo $html;
 	?>
 </div>
 

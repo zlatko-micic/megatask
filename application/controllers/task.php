@@ -84,11 +84,13 @@ class Task extends CI_Controller {
 				//create an array with details of users who are in project
 				$a_project_users_names = explode(',',$data['task_info'][0]->names);
 				$a_project_users_last_names = explode(',',$data['task_info'][0]->last_names);
+				$a_project_users_ids = explode(',',$data['task_info'][0]->ids);
 				
 				$a_temp = array();
 				foreach ($a_project_users_names as $key => $row) {
 					$a_temp[$key]['name'] = $row;
 					$a_temp[$key]['last_name'] = $a_project_users_last_names[$key];
+					$a_temp[$key]['id'] = $a_project_users_ids[$key];
 				}
 				
 				$data['task_info'][0]->task_users = $a_temp;

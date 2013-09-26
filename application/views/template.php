@@ -143,7 +143,7 @@ if (isset($page_details['id'])) {
 		$html = '';
 		$html .= '<div id="show_working_stopwatch_details">'. "\n";
 		$html .= 'Working on <b>'.$now_woring_task[0]->title.'</b>'. "\n";
-		$html .= '<div id="show_working_stopwatch">'.intval($now_woring_task[0]->diff).'</div>'. "\n";
+		$html .= '<div id="show_working_stopwatch" data-seconds="'.intval($now_woring_task[0]->diff).'">&nbsp;</div>'. "\n";
 		$html .= '<div id="stop_working_task" class="submitForm">Stop working</div>'. "\n";
 		
 		$html .= '</div>'. "\n";

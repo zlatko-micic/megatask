@@ -66,7 +66,7 @@ $(document).ready(function() {
 	var $stopwatch = $('#show_working_stopwatch');
 
     if ($stopwatch.length) {
-		var milseconds = parseInt($stopwatch.html());
+		var milseconds = parseInt($stopwatch.data('seconds'));
 		
 		$stopwatch.stopwatch({startTime: milseconds}).stopwatch('start');
     }

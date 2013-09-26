@@ -2,7 +2,7 @@
 Class Project_model extends CI_Model {
 	
 	function projectDetails($project_id) {
-		//get main infos about task
+		//get main infos about task ()
 		
 		$this->db->select('projects.id,
 			projects.title,
@@ -10,14 +10,14 @@ Class Project_model extends CI_Model {
 			users.id as owner_id,
 			users.name as owner_name,
 			users.surname as last_name,
-			GROUP_CONCAT(DISTINCT(u.name)) as names,
-			GROUP_CONCAT(DISTINCT(u.surname)) as last_names,
-			GROUP_CONCAT(DISTINCT(u.id)) as ids');
+			GROUP_CONCAT(u.name) as names,
+			GROUP_CONCAT(u.surname) as last_names,
+			GROUP_CONCAT(u.id) as ids');
 		
 		$this->db->from('projects');
 		$this->db->join('users', 'users.id = projects.user_id ', 'left');
 		$this->db->join('project_users', 'project_users.project_id = projects.id ', 'left');
-		$this->db->join('users u', 'users.id = project_users.user_id', 'left');
+		$this->db->join('users u', 'u.id = project_users.user_id', 'left');
 		
 		$this->db->where('projects.id', $project_id);
 		$this->db->where('project_users.project_id', $project_id);
