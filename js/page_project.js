@@ -6,15 +6,12 @@ $(document).ready(function() {
 		$(this).addClass('selected');
 		
 		var m = $(this).data('id');
-		//alert(m);
 		
 		if (m == 1) {
-			$('.mineTask').fadeIn();
-			//alert('in');
+			$('#project_tasks li').fadeIn();
 		}
 		else if (m == 2) {
-			$('.mineTask').fadeOut();
-			//alert('out');
+			$('#project_tasks li:not(.mineTask)').fadeOut();
 		}
 		
 		var cookieValue = $('#showHideAll li.selected').index()+','+$('#showHideDone li.selected').index();

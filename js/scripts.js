@@ -16,7 +16,6 @@ $(document).ready(function() {
 			//hide other boxes
 			$(".listProjectBox").fadeOut();
 		}
-		//alert('s');
 		e.preventDefault();
 	});
 	
@@ -30,7 +29,6 @@ $(document).ready(function() {
 			//hide other boxes
 			$(".createProjectBox").fadeOut();
 		}
-		//alert('s');
 		e.preventDefault();
 	});
 	
@@ -39,15 +37,15 @@ $(document).ready(function() {
 		var title = $('#project_title').val();
 		
 		$('#respond').html('&nbsp;').activity({segments: 8, width:2, space: 0, length: 3, color: '#ccc', speed: 1.5});
-		
+
 		$.ajax({
-			url: "/megatask/a/create_project", //change this link
+			url: globalLink + "a/create_project",
 			type: "POST",
 			data: { title: title},
 			dataType: "json",
 			success: function (json) {
 				if (json.success) {
-					window.location.href = "/megatask/project/"+ json.project_id; //change this link
+					window.location.href = globalLink + "project/"+ json.project_id;
 				}
 				else {
 					$('#createProjectRespond').html('<div class="infoerrornote"><em></em>'+ json.message +'</div>');
@@ -74,14 +72,14 @@ $(document).ready(function() {
 	//stop working
 	$("#stop_working_task").on('click', function() {		
 		$.ajax({
-			url: "http://localhost:8888/megatask/a/start_working/stop", //change this link
+			url: globalLink + "a/start_working/stop", 
 			type: "POST",
 			data: { },
 			dataType: "json",
 			success: function (json) {
 				if (json.success) {
-					//refresh maybe
 					$('#show_working_stopwatch_details').fadeOut();
+					window.location.href = document.URL;
 				}
 				else {
 					alert(json.message);
@@ -97,3 +95,5 @@ $(document).ready(function() {
     });
 	
 });
+
+//alert(document.URL);

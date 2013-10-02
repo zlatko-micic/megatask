@@ -1,8 +1,8 @@
 $(document).ready(function() {
 	
 	//datetime picker
-	$('#due_date').datetimepicker({
+	$('#started, #ended').datetimepicker({
 		dateFormat: 'yy-mm-dd',
-		timeFormat: 'HH:mm:ss'
+		timeFormat: 'HH:mm:ss',
 	});
 });

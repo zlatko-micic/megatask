@@ -60,6 +60,15 @@ class Task_create extends CI_Controller {
 					}
 				}
 				
+				$data['post_string'] = array(
+					's_title' => $this->input->post('title'),
+					's_description' => $this->input->post('description'),
+					's_due_date' => $this->input->post('due_date'),
+					'a_task_user' => $this->input->post('task_user')
+				 );
+				
+				 $data['post_string']['a_task_user'] = is_array($this->input->post('task_user')) ? $this->input->post('task_user') : array();
+				
 				
 				//get all projects
 				$data['my_projects'] = $this->project_model->userProjects($data['session_data']['user_id']);
@@ -89,18 +98,18 @@ class Task_create extends CI_Controller {
 	
 	function checkDateTime($value) {		
 		if (!isset($value)) {
-			//no date/time
+			//date/time not set
 			return TRUE;
 		}
 		else {
-			//not an admin
-			if (preg_match("/^(\d{4})-(\d{2})-(\d{2}) ([01][0-9]|2[0-3]):([0-5][0-9])$/", $value, $matches)) { 
-				if (checkdate($matches[2], $matches[3], $matches[1])) { 
-					return true; 
-				} 
+			//date-time set
+			if (checkDateTime($value)) { 
+				return true;
 			}
-			$this->form_validation->set_message('checkDateTime', 'Not valid datetime format');
-			return false;
+			else {
+				$this->form_validation->set_message('checkDateTime', 'Not valid datetime format');
+				return false;
+			}
 		}
 	}
 	

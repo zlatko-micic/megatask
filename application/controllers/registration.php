@@ -70,7 +70,7 @@ class Registration extends CI_Controller {
 				// not successful
 				$vals = array(
 					'img_path' => 'images/captcha/',
-					'img_url' => 'http://localhost:8888/megatask/images/captcha/'
+					'img_url' => site_url('/images/captcha/').'/',
 				);
 				
 				// Generate the captcha

@@ -4,7 +4,6 @@ function formatSeconds(seconds) {
     return date.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
 }
 
-
 $(document).ready(function() {
 	
 	//hide tasks
@@ -15,7 +14,7 @@ $(document).ready(function() {
 		$("#ajax_working_activity").html('&nbsp;').activity({segments:8,width:2,space:0,length:3,color:'#000',speed:1.5});
 		
 		$.ajax({
-			url: "http://localhost:8888/megatask/a/start_working", //change this link
+			url: globalLink + "a/start_working",
 			type: "POST",
 			data: {
 				task: id
@@ -24,7 +23,7 @@ $(document).ready(function() {
 			success: function (json) {
 				if (json.success) {
 					//$('#working_stopwatch').stopwatch().stopwatch('start');
-					 location.reload();
+					window.location.href = document.URL;
 				}
 				else {
 					$('#respond_working').html('<div class="infoerrornote"><em></em>'+ json.message +' <span id="working_stopwatch_json"></span></div>');
@@ -38,7 +37,6 @@ $(document).ready(function() {
 			error: function (xhr, ajaxOptions, thrownError) {
 				alert(xhr.status);
 				alert(thrownError);
-				//$('#createProjectRespond').html('<div class="infoerrornote"><em></em>Error status: '+ xhr.status +'<br>'+ thrownError +'</div>');
 			}
 		}); //end ajax
 		
@@ -88,8 +86,6 @@ $(document).ready(function() {
 	});
 	
 	//scroll down working details
-	
-
 	$( ".menu_dropdown" ).click(function() {
 		//alert('s');
 		$(this).parent().find(".hidden_details").toggle("fast",function() {
@@ -97,5 +93,38 @@ $(document).ready(function() {
 		});
 	});
 	
+	//close task
+	$('#close_task').on("click",function() {
+		
+		var id = $(this).attr('data-id');
+		
+		$("#respond_task_close").html('&nbsp;').activity({segments:8,width:2,space:0,length:3,color:'#000',speed:1.5});
+		
+		$.ajax({
+			url: globalLink + "a/task_end",
+			type: "POST",
+			data: {
+				task_id: id
+			},
+			dataType: "json",
+			success: function (json) {
+				if (json.success) {
+					window.location.href = document.URL;
+				}
+				else {
+					$('#respond_task_close').html('<div class="infoerrornote"><em></em>'+ json.message +'</div>');
+				}
+
+			},
+			error: function (xhr, ajaxOptions, thrownError) {
+				alert(xhr.status);
+				alert(thrownError);
+			}
+		});
+
+		return false;
+	});
+	
+	//click all works (to count sum)
 	$('#filter_working_hours li:first').click();
 });

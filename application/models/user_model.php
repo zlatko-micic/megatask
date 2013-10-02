@@ -2,13 +2,13 @@
 Class User_model extends CI_Model {
     
 	function login($username, $password) {
-		$this -> db -> select('id, name');
-		$this -> db -> from('users');
-		$this -> db -> where('email', $username);
-		$this -> db -> where('password', $password);
-		$this -> db -> limit(1);
+		$this->db->select('id, name, surname');
+		$this->db->from('users');
+		$this->db->where('email', $username);
+		$this->db->where('password', $password);
+		$this->db->limit(1);
 		
-		$query = $this -> db -> get();
+		$query = $this->db-> get();
 		
 		if ($query -> num_rows() == 1) {
 			return $query->result();
@@ -19,6 +19,7 @@ Class User_model extends CI_Model {
 	}
  
 	function isWorkingOnTask($user_id) {
+		//check if user is working on any task at the moment
 		$this->db->select('working_hours.id,
 						tasks.title,
 						((-1000) * TIME_TO_SEC(TIMEDIFF(working_hours.started, NOW()))) as diff,
@@ -49,10 +50,8 @@ Class User_model extends CI_Model {
 	}
 	
 	function closeTask($user_id, $time) {
-		
-		 $data = array(
-               'finished' => $time
-            );
+		//close any opened works
+		$data = array('finished' => $time);
 
 		$this->db->where('user_id', $user_id);
 		$this->db->where('finished', '0000-00-00 00:00:00');
@@ -79,6 +78,7 @@ Class User_model extends CI_Model {
 	}
 
 	function register($email, $password, $name, $surname) {
+		//register a user
 		$this->db->set('email', $email);
 		$this->db->set('password', $password);
 		$this->db->set('name', $name);
@@ -89,6 +89,7 @@ Class User_model extends CI_Model {
 	}
 	
 	function projectInvite($user_id, $project_id, $date = '' , $date_a = '') {
+		//invite registered user into a project
 		$date = $date == '' ? date("Y-m-d H:i:s") : $date;
 		$date_a = $date_a == '' ? '0000-00-00 00:00:00' : $date_a;
 		
@@ -102,7 +103,7 @@ Class User_model extends CI_Model {
 	}
 	
 	function checkUserInvitation($user_id, $invitation_id) {
-		
+		//check if the user is invited
 		$this->db->select('id');
 		$this->db->from('project_users');
 		$this->db->where('user_id', $user_id);
@@ -120,8 +121,8 @@ Class User_model extends CI_Model {
 	}
 	
 	function acceptInvitation($invitation_id, $active) {
-		
-		 $data = array(
+		//accept or reject invitation for project
+		$data = array(
                'active' => $active
             );
 
@@ -133,6 +134,7 @@ Class User_model extends CI_Model {
 	}
 	
 	function sendInvite($email, $project_id) {
+		//email invitation sent
 		$this->db->set('email', $email);
 		$this->db->set('project_id', $project_id);
 		$this->db->insert('invitations');
@@ -141,6 +143,7 @@ Class User_model extends CI_Model {
 	}	
 	
 	function getEmailInvitations($email) {
+		//get all users invitation for his e-mail address
 		$this->db->select('project_id');
 		$this->db->select('date_sent');
 		$this->db->from('invitations');
@@ -157,10 +160,9 @@ Class User_model extends CI_Model {
 	}
 	
 	function deleteEmailInvitations($email) {
+		//delete all users email invitations
 		$this->db->where('email', $email);
 		$this->db->delete('invitations');
-		
-		$query = $this->db->get();
 		
 		return ($this->db->affected_rows() != 1) ? false : true;
 	}

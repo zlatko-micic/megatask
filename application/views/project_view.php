@@ -1,28 +1,25 @@
 <div class="breadcrumb flat">
 	<a href="<?=site_url('/')?>">Home</a>
-	<a href="<?=site_url('/project/'. $this->uri->segment(2))?>"><?=$project_details[0]->title?></a>
+	<a href="<?=site_url('/project/'. $this->uri->segment(2))?>"><?=filter_data($project_details[0]->title)?></a>
 </div>
 
 <hr>
 
 <div id="leftRow">
+	<ul class="taskList">
+		<li><h1><?=filter_data($project_details[0]->title)?></h1></li>
+		<li><h2>created by <?=$project_details[0]->owner_name?> <?=$project_details[0]->last_name?></h2></li>
+		<li>
+			users in this project:<br>
+			<?php
+			foreach ($project_details[0]->users as $row) {
+				echo $row['name'].' '.$row['last_name'].'<br>';
+			}
+			?>
+		</li>
+		<li><a href="<?php echo site_url('project-details/'. $this->uri->segment(2) ) ?>">Project statistics</a></li>
+	</ul>
 
-<h1><?=$project_details[0]->title?></h1>
-<h2>created by <?=$project_details[0]->owner_name?> <?=$project_details[0]->last_name?></h2>
-<br>
-users in this project:<br>
-<?php
-foreach ($project_details[0]->users as $row) {
-	echo $row['name'].' '.$row['last_name'].'<br>';
-}
-?>
-<hr>
-
-<a class="tiptip" title="Project statistics" href="<?php echo site_url('project-details/'. $this->uri->segment(2) ) ?>"><img src="<?php echo base_url('images/icons/32x32/statistics.png'); ?>" /></a>
- 
-<a class="tiptip" title="Create a task for this project" href="<?php echo site_url('task-create/'. $this->uri->segment(2) ) ?>"><img src="<?php echo base_url('images/icons/32x32/future-projects.png'); ?>" /></a>
-<br>
-<hr>
 <?php
 //admins form for inviting users into this project
 if ($session_data['user_id'] == $project_details[0]->owner_id ) {
@@ -45,8 +42,6 @@ if ($session_data['user_id'] == $project_details[0]->owner_id ) {
 	$html .= form_input(array(
 						'name' => 'email',
 						'placeholder' => 'E-mail address',
-						'onclick' => 'if(this.value == \'E-mail address\') this.value = \'\'', //IE6 IE7 IE8
-						'onblur' => 'if(this.value == \'\') this.value = \'E-mail address\''  //IE6 IE7 IE8
 						));
 	$html .= form_hidden('project', $this->uri->segment(2));
 	$html .= '<br/><br/>'. "\n";
@@ -60,11 +55,11 @@ if ($session_data['user_id'] == $project_details[0]->owner_id ) {
 </div>
 
 <div id="rightRow">
-	<h2>Project tasks</h2>
-		
+	<h1>Project tasks</h1>
+	<a class="accept" href="<?php echo site_url('task-create/'. $this->uri->segment(2) ) ?>">Create new task</a>
 	<?php
+	//list of tasks for this project
 	$html = '';
-	
 	if ($project_tasks) {
 		$html .= '<hr>' . "\n";
 		$html .= '<ul class="menuList" id="showHideAll">' . "\n";
@@ -72,12 +67,20 @@ if ($session_data['user_id'] == $project_details[0]->owner_id ) {
 		$html .= '<li data-id="2">Show just my tasks</li>' . "\n";
     	$html .= '</ul>' . "\n";
 
-		$html .= '<ul class="taskList">';
+		$html .= '<ul class="taskList" id="project_tasks">';
 	
 		foreach ($project_tasks as $row) {
 			//css for my tasks
 			$mine_taks = $row->admin == 1 ? 'mineTask' : '';
-			$html .= '<li class="'.$mine_taks.'"><a class="tiptip" title="'.$row->description.'" href="'.site_url('task/'. $row->id ).'">'.$row->title.'</a></li>'."\n";
+			//css for done tasks
+			$done_taks = $row->active == 0 ? 'doneTask' : '';
+			
+			$html .= '<li class="'.$mine_taks.' '.$done_taks.'">'."\n";
+			if ($row->active == 0) {
+				$html .= '<em class="checked"></em>'."\n";
+			}
+			$html .= '<a class="tiptip" title="'.  htmlentities(filter_data($row->description)).'" href="'.site_url('task/'. $row->id ).'">'.filter_data($row->title).'</a>'."\n";
+			$html .= '</li>'."\n";
 		}
 		$html .= '</ul>';
 	}

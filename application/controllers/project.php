@@ -63,21 +63,24 @@ class Project extends CI_Controller {
 							$this->load->library('email');
 							
 							$config = Array(
-								'protocol' => 'smtp',
-								'smtp_host' => 'ssl://smtp.googlemail.com',
-								'smtp_port' => 465,
-								'smtp_user' => 'user',
-								'smtp_pass' => 'pass',
-								'mailtype'  => 'html', 
-								'charset'   => 'iso-8859-1'
+								//'protocol' => 'smtp',
+								//'smtp_host' => 'ssl://smtp.googlemail.com',
+								//'smtp_port' => 465,
+								//'smtp_user' => 'user',
+								//'smtp_pass' => 'pass',
+								'mailtype'  => 'html',
+								'protocol' => 'mail',
+								'wordwrap' => FALSE,
+								'charset' => 'utf-8',
+								'crlf' => "\r\n",
+								'newline' => "\r\n"
 							);
-							//$this->load->library('email', $config);
+							$this->load->library('email', $config);
 							//$this->email->set_newline("\r\n");
 
-							$this->email->from('zlatkomicic@gmail.com', 'Zlatko Micic');
+							$this->email->from('zlatkomicic@gmail.com', 'Megatask');
 							$this->email->to($this->input->post('email'));
 							$this->email->subject('Project invitation');
-							//$this->email->message('Text with link and invitation to create an account');
 							$this->email->message( $this->load->view( 'emailmessage_view', $data, true ) );
 
 							if ($this->email->send()) {

@@ -49,7 +49,7 @@ class Project_details extends CI_Controller {
 				//create array with user IDs
 				if ($data['project_details']) {
 					foreach ($data['project_details'] as $row)
-						if (!$this->in_multiarray($row->user_id,$a_users,'id') && $row->finished != '0000-00-00 00:00:00') 
+						if (!in_multiarray($row->user_id,$a_users,'id') && $row->finished != '0000-00-00 00:00:00') 
 								array_push($a_users,array(
 														'id' =>$row->user_id,
 														'name' =>$row->name
@@ -87,6 +87,8 @@ class Project_details extends CI_Controller {
 				//get all projects
 				$data['my_projects'] = $this->project_model->userProjects($data['session_data']['user_id']);
 				
+				//get project details for breadcreumbs
+				$data['breadcrumb_details'] = $this->project_model->projectDetails($this->uri->segment(2));
 				
 				$this->template->load('template', 'project_details_view', $data);
 			}
@@ -101,56 +103,4 @@ class Project_details extends CI_Controller {
 			redirect('login', 'refresh');
 		}
 	}
-	
-	function convertSeconds($time) {
-		// time duration in seconds
-
-		$days = floor($time / (60 * 60 * 24));
-		$time -= $days * (60 * 60 * 24);
-
-		$hours = floor($time / (60 * 60));
-		$time -= $hours * (60 * 60);
-
-		$minutes = floor($time / 60);
-		$time -= $minutes * 60;
-
-		$seconds = floor($time);
-		$time -= $seconds;
-		
-		$result = '';
-		
-		if ($days > 0) {
-			$result .= $days.' days ';
-		}
-		if ($days > 0 && $hours > 0) {
-			$result .= $hours.' hours ';
-		}
-		if ($days > 0 && $hours > 0 && $minutes > 0) {
-			$result .= $minutes.' minutes ';
-		}
-		
-		if ($days > 0 && $hours > 0 && $minutes > 0 && $seconds > 0 ) {
-			$result .= $seconds.' seconds ';
-		}
-		
-		return $result;
-	}
-	
-	function in_multiarray($elem, $array,$field) {
-		$top = sizeof($array) - 1;
-		$bottom = 0;
-		while($bottom <= $top)
-		{
-			if($array[$bottom][$field] == $elem)
-				return true;
-			else 
-				if(is_array($array[$bottom][$field]))
-					if(in_multiarray($elem, ($array[$bottom][$field])))
-						return true;
-
-			$bottom++;
-		}        
-		return false;
-	}
-
 }

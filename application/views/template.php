@@ -12,6 +12,9 @@
 <link rel="stylesheet" type="text/css" href="<?php echo site_url('css/tipTip.css') ?>" media="all" />
 <link rel="stylesheet" type="text/css" href="<?php echo site_url('css/ui-lightness/jquery-ui-1.10.3.custom.min.css') ?>" media="all" />
 
+<script type="text/javascript">
+	var globalLink = '<?=site_url()?>';
+</script>
 <script type="text/javascript" src="<?php echo site_url('js/lib/jquery-1.9.1.min.js') ?>"></script>
 <script type="text/javascript" src="<?php echo site_url('js/lib/jquery-ui-1.10.3.custom.min.js') ?>"></script>
 <script type="text/javascript" src="<?php echo site_url('js/jquery-ui-timepicker-addon.js') ?>"></script>
@@ -20,10 +23,19 @@
 <script type="text/javascript" src="<?php echo site_url('js/activity-indicator-1.0.0.min.js') ?>"></script>
 <script type="text/javascript" src="<?php echo site_url('js/jquery.stopwatch.js') ?>"></script>
 <script type="text/javascript" src="<?php echo site_url('js/scripts.js') ?>"></script>
-<script type="text/javascript" src="<?php echo site_url('js/highcharts/js/highcharts.src.js') ?>"></script>
+
+
 <?php
 /* load scripts for particular page
- * 
+ * 1 - registration
+ * 2 - login
+ * 3 - home
+ * 4 - project
+ * 5 - task
+ * 6 - create task
+ * 7 - project details
+ * 8 - edit working
+ * 9 - settings
  */
 if (isset($page_details['id'])) {
 	if ($page_details['id'] == 3) {
@@ -37,6 +49,13 @@ if (isset($page_details['id'])) {
 	}
 	if ($page_details['id'] == 6) {
 		echo '<script type="text/javascript" src="'. site_url('js/page_task_create.js').'"></script>';
+	}
+	
+	if ($page_details['id'] == 7) {
+		echo '<script type="text/javascript" src="'. site_url('js/highcharts/js/highcharts.src.js').'"></script>';
+	}
+	if ($page_details['id'] == 8) {
+		echo '<script type="text/javascript" src="'. site_url('js/page_edit_work.js').'"></script>';
 	}
 	
 }
@@ -124,7 +143,7 @@ if (isset($page_details['id'])) {
 		$html .= '<div class="listProjectBox">'. "\n";
 		if (!empty($my_projects)) {
 			foreach ($my_projects as $my_project ) {
-				$html .= '<a href="'.site_url('/project/'.$my_project->id).'">'.$my_project->title.'</a><br>';
+				$html .= '<a href="'.site_url('/project/'.$my_project->id).'">'.filter_data($my_project->title).'</a><br>';
 			}	
 		}
 		else {
@@ -142,7 +161,7 @@ if (isset($page_details['id'])) {
 	if (isset($now_woring_task) && !empty($now_woring_task)) {
 		$html = '';
 		$html .= '<div id="show_working_stopwatch_details">'. "\n";
-		$html .= 'Working on <b>'.$now_woring_task[0]->title.'</b>'. "\n";
+		$html .= 'Working on <b>'.filter_data($now_woring_task[0]->title).'</b>'. "\n";
 		$html .= '<div id="show_working_stopwatch" data-seconds="'.intval($now_woring_task[0]->diff).'">&nbsp;</div>'. "\n";
 		$html .= '<div id="stop_working_task" class="submitForm">Stop working</div>'. "\n";
 		

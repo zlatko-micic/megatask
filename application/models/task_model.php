@@ -25,6 +25,59 @@ Class Task_model extends CI_Model {
 		
 	}
 	
+	function isCompleted($task_id) {
+		//check if task is completed
+		
+		$this->db->select('tasks.id');
+		$this->db->from('tasks');
+		$this->db->where('tasks.id', $task_id);
+		$this->db->where('tasks.active', 0);
+		
+		$query = $this->db->get();
+		
+		if($query -> num_rows() > 0) {
+			return TRUE;
+		}
+		else {
+			return FALSE;
+		}	
+	}
+	
+	function closeTask($task_id, $user_id, $time) {
+		//close any opened task
+		$data = array('active' => 0,
+			'date_finished' => $time,
+			'finished_by' => $user_id
+			);
+
+		$this->db->where('id', $task_id);
+		$this->db->update('tasks', $data);
+		
+		return ($this->db->affected_rows() != 1) ? false : true;
+	}
+	
+	function checkUserAdminPrivilege($task_id, $user_id) {
+		/*
+		 * check if user is allowed to see the task
+		 * check if the user is part of the project 
+		 */
+		
+		$this->db->select('tasks.id');
+		$this->db->from('tasks');
+		$this->db->where('tasks.id', $task_id);
+		$this->db->where('tasks.user_id', $user_id);
+		
+		$query = $this -> db -> get();
+		
+		if($query -> num_rows() > 0) {
+			return TRUE;
+		}
+		else {
+			return FALSE;
+		}
+		
+	}
+	
 	function comingTasks($user_id) {
 		/*
 		 * Tasks that have to be finished soon 
@@ -62,6 +115,7 @@ Class Task_model extends CI_Model {
 			tasks.priority,
 			tasks.due_date,
 			tasks.date_finished,
+			users.id as admin_id,
 			users.name as admin_name,
 			users.surname as admin_lastname,
 			u_d.name as done_name,
@@ -97,7 +151,6 @@ Class Task_model extends CI_Model {
 		$this->db->join('users', 'users.id = messages.user_id', 'left');
 		$this->db->join('files', 'files.message_id = messages.id', 'left');
 		$this->db->where('task_id', $id);
-		//$this -> db -> limit(1);
 		
 		$query = $this->db->get();
 		
@@ -209,6 +262,16 @@ Class Task_model extends CI_Model {
 		else {	
 			return false;
 		}
+	}
+	
+	function deleteTask($id) {
+		//delete task
+		$this->db->where('id', $id);
+		$this->db->delete('tasks');
+		
+		$query = $this->db->get();
+		
+		return ($this->db->affected_rows() != 1) ? false : true;
 	}
 	
 	

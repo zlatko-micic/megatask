@@ -47,6 +47,8 @@ $route['task/:num'] = "task";
 $route['project/:num'] = "project";
 $route['project-details/:num'] = "project_details";
 $route['task-create/:num'] = "task_create";
+$route['edit-work/:num'] = "edit_work";
+$route['file/:num'] = "file";
 
 
 /* End of file routes.php */

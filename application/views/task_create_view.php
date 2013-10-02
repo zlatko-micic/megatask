@@ -27,7 +27,8 @@ echo form_open(uri_string(), $input_attributes) ;
 	$html .= '<label for="title">Task title</label><br/>'. "\n";
 	$html .= form_input(array('id' => 'title',
 						'name' => 'title',
-						'placeholder' => 'Task title'
+						'placeholder' => 'Task title',
+						'value' => $post_string['s_title'],
 						));
 	//project id
 	$html .= form_hidden('project', $this->uri->segment(2));
@@ -37,7 +38,9 @@ echo form_open(uri_string(), $input_attributes) ;
 	$html .= '<label for="description">Task description</label><br/>'. "\n";
 	$html .= form_textarea(array('id' => 'description',
 								'name' => 'description',
-								'placeholder' => 'Task description')). "\n";
+								'placeholder' => 'Task description',
+								'value' => $post_string['s_description'],
+								)). "\n";
 	$html .= '<br/><br/>'. "\n";
 
 
@@ -45,7 +48,8 @@ echo form_open(uri_string(), $input_attributes) ;
 	$html .= '<label for="due_date">Due date</label><br/>'. "\n";
 	$html .= form_input(array('id' => 'due_date',
 						'name' => 'due_date',
-						'placeholder' => 'Due date'
+						'placeholder' => 'Due date',
+						'value' => $post_string['s_due_date'],
 						));
 	$html .= '<br/><br/>'. "\n";
 
@@ -65,12 +69,20 @@ echo form_open(uri_string(), $input_attributes) ;
 	$html .= '<h1>Assign task to user(s)</h1>'. "\n";
 	$html .= '<ul>'. "\n";
 	foreach ($project_users as $project_user) {
-		$html .= '<li>'.$project_user->name.' '.$project_user->surname.' id-'.$project_user->id.' '. "\n";
+		
+		$checked = in_array($project_user->id, $post_string['a_task_user']) ? TRUE : FALSE;
+		
+		$html .= '<li>'. "\n";
 		$html .= form_checkbox(array(
 						'name' => 'task_user[]',
 						'value' => $project_user->id,
-						'checked'     => FALSE,
+						'checked'     => $checked,
+						'id' => 'taskUser'. $project_user->id ,
 						));
+		
+		$html .= '<label for="taskUser'. $project_user->id .'">'.$project_user->name.' '.$project_user->surname.'</label><br/>'. "\n";
+		//$html .= $project_user->name.' '.$project_user->surname.' '. "\n";
+		
 		$html .= '</li>'. "\n";
 	}
 	$html .= '</ul>'. "\n";

@@ -114,8 +114,12 @@ $(function () {
     });
 </script>
 
-xxx
-project id = <?php echo $this->uri->segment(2) ?><br>
+
+<div class="breadcrumb flat">
+	<a href="<?=site_url('/')?>">Home</a>
+	<a href="<?=site_url('/project/'. $this->uri->segment(2))?>"><?=filter_data($breadcrumb_details[0]->title)?></a>
+	<a href="#">Project statistics</a>
+</div>
 
 <div id="containerRight"></div>
 
@@ -129,12 +133,5 @@ if ($project_details) {
 	}	
 }
 echo $html;
-
-
-echo "<pre>";
-print_r($project_details);
-echo "</pre>";
-
-echo project_details::convertSeconds($sum_seconds);
 
 ?>

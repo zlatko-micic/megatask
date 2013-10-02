@@ -106,6 +106,12 @@ body {
 
 }
 
+.infooknote a {
+	color:#fff !important;
+	text-shadow: 0px 1px 0px #666 !important;
+	text-decoration: none !important;
+}
+
 .infonote {
 	border: #d1d09e 1px solid;
 	background:#faf9c3;
@@ -173,7 +179,7 @@ body {
 .accept , .reject{
 	cursor:pointer;
 	position:relative;
-	padding:5px 20px 5px 20px;
+	padding:5px 10px 5px 10px;
 	
 	border: 1px solid #878787;
 	box-shadow: 0 1px 0 0 #DCDCDC inset, 0 -1px 1px #ACACAC inset;
@@ -182,11 +188,12 @@ body {
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
-	line-height:25px;
+	line-height:20px;
 	text-align: center;
 	font-size:16px;
 	margin:  3px 3px 3px 0;
 	display: inline-block;
+	text-decoration: none;
 }
 
 .accept{
@@ -501,6 +508,7 @@ body {
 .taskList li {
 	padding: 5px 0 5px 0;
 	border-bottom: dotted 1px #cacaca;
+	font-size: 14px;
 }
 
 .taskList li a {
@@ -512,45 +520,50 @@ body {
 	color: red;
 }
 
-em.menu_dropdown {
-	position:relative;
-	width:16px;
-	height:16px;
-	background: transparent url("../images/menu_dropdown.png") no-repeat center center;
-	top:3px;
-	display:inline-block;
-	cursor: pointer;
-	margin: 0 3px 0 0 ;
+.taskList li.doneTask a {
+	color:#868686;
 }
-em.pencil_edit {
+
+
+em.menu_dropdown, em.pencil_edit , em.delete , em.attachment, em.checked {
 	position:relative;
 	width:16px;
 	height:16px;
-	background: transparent url("../images/pencil_small.png") no-repeat center center;
 	top:3px;
 	display:inline-block;
 	cursor: pointer;
 	margin: 0 3px 0 0 ;
 }
 
-em.delete {
-	position:relative;
-	width:16px;
-	height:16px;
-	background: transparent url("../images/edit_delete.png") no-repeat center center;
-	top:3px;
-	display:inline-block;
-	cursor: pointer;
-	margin: 0 3px 0 0 ;
+em.menu_dropdown {
+	background: transparent url("../images/menu_dropdown.png") no-repeat center center;
+
 }
+em.pencil_edit {
+	background: transparent url("../images/pencil_small.png") no-repeat center center;
+}
+
+em.delete {
+	background: transparent url("../images/edit_delete.png") no-repeat center center;
+}
+
+em.attachment {
+	background: transparent url("../images/attach.png") no-repeat center center;
+}
+
+em.checked {
+	background: transparent url("../images/ok.png") no-repeat center center;
+}
+
+
 
 .hidden_details {
 	display: none;
 }
 
-/* all the input except submit and checkbox */
+/* all the input except submit and checkbox */customInputField, 
 .connect input:not([type="checkbox"]), 
-.connect textarea{
+.connect textarea {
 	width: 100%;
 	margin-bottom:10px;
 	margin: 0 -3px 10px -3px;
@@ -570,6 +583,9 @@ em.delete {
 	transition: all 0.2s linear;
 	font-size:16px;
 }
+
+.customInput:active,
+.customInput:focus,
 .connect input:not([type="checkbox"]):active,
 .connect input:not([type="checkbox"]):focus , 
 .connect textarea:active, 
@@ -586,20 +602,28 @@ em.delete {
 	resize:none;
 }
 
+.customInput:-moz-placeholder,
 .connect input:-moz-placeholder,
 .connect textarea:-moz-placeholder { 
  	color:rgba(50,50,50,0.5) !important;
 }
 
+.customInput::-webkit-input-placeholder,
 .connect ::-webkit-input-placeholder { /* WebKit browsers */
     color:rgba(50,50,50,0.5) !important;
 }
+
+.customInput:-moz-placeholder,
 .connect :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
     color:rgba(50,50,50,0.5) !important;
 }
+
+.customInput::-moz-placeholder,
 .connect ::-moz-placeholder { /* Mozilla Firefox 19+ */
    color:rgba(50,50,50,0.5) !important;
 }
+
+.customInput:-ms-input-placeholder,
 .connect :-ms-input-placeholder { /* Internet Explorer 10+ */
     color:rgba(50,50,50,0.5) !important;
 }

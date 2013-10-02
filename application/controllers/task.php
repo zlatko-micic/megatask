@@ -30,7 +30,7 @@ class Task extends CI_Controller {
 				$this->form_validation->set_rules('message', "Message", 'trim|required|min_length[3]|xss_clean');
 				
 				if ($this->form_validation->run() == FALSE) {
-					
+					$data['error_message'] = validation_errors($this->upload->display_errors('<p>', '</p>'));
 				}
 				else {
 					//load user model

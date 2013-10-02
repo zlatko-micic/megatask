@@ -81,6 +81,7 @@ Class Project_model extends CI_Model {
 		
 		$this->db->select('project_users.id,
 			project_users.date_sent,
+			projects.id as project_id,
 			projects.title,
 			users.name,
 			users.surname

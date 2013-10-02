@@ -30,7 +30,6 @@ class A_join_project extends CI_Controller {
 				//update invitation details
 				if($this->user_model->acceptInvitation($this->input->post('invitation'), $this->input->post('accept'))) {
 					$json['success'] = true;
-					$json['message'] = $this->input->post('invitation') . " xxx ". $this->input->post('accept');
 				}
 				else {
 					//problem creating the project
